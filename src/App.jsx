@@ -1,6 +1,6 @@
 import { styled } from 'styled-components';
 import './index.css';
-import { Timeout } from './components/Timeout';
+// import { Timeout } from './components/Timeout';
 import { useEffect, useState } from 'react';
 const Container = styled.div`
   display: flex;
@@ -62,34 +62,7 @@ function App() {
     setHeartbeat1(true);
   };
 
-  return (
-    <Container>
-      <Canvas>
-        <User />
-        <Seqs>
-          <SeqWrapper top='100px' left='50px'>
-            <Timeout defaultTimeout={100} heartbeat={heartbeat} />
-          </SeqWrapper>
-          {/* <SeqWrapper top='100px' left='50px'>
-            <Timeout timeout={90} heartbeat={heartbeat2} />
-          </SeqWrapper>
-          <SeqWrapper top='100px' left='50px'>
-            <Timeout timeout={80} heartbeat={heartbeat3} />
-          </SeqWrapper>
-          <SeqWrapper top='100px' left='50px'>
-            <Timeout timeout={75} heartbeat={heartbeat4} />
-          </SeqWrapper>
-          <SeqWrapper top='100px' left='50px'>
-            <Timeout timeout={65} heartbeat={heartbeat5} />
-          </SeqWrapper> */}
-        </Seqs>
-        <button onClick={handleClick} style={{ height: 100, width: 100 }}>
-          Heartbeat
-        </button>
-        <Rollup>L1</Rollup>
-      </Canvas>
-    </Container>
-  );
+  return <Container></Container>;
 }
 
 export default App;

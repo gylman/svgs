@@ -22,7 +22,7 @@ function getColorFromPercentage(percentage) {
   return `hsl(${hue}, 100%, 50%)`;
 }
 
-export const Timeout = ({ defaultTimeout, heartbeat }) => {
+export const Node = ({ defaultTimeout, heartbeat, x, y, r, fill, text }) => {
   const [timeout, setTimeout] = useState(defaultTimeout);
 
   useEffect(() => {
@@ -30,7 +30,7 @@ export const Timeout = ({ defaultTimeout, heartbeat }) => {
       if (timeout > 0) {
         setTimeout((prevState) => prevState - 1);
       } else {
-        setTimeout(timeout);
+        setTimeout(defaultTimeout);
       }
     }, 100);
     return () => {
@@ -42,12 +42,10 @@ export const Timeout = ({ defaultTimeout, heartbeat }) => {
     if (heartbeat) setTimeout(defaultTimeout);
   }, [heartbeat]);
 
-  const width = 100;
-  const stokeWidth = 15;
-  const r = width / 2 - stokeWidth / 2;
+  const strokeWidth = 2;
+  const width = 2 * r + strokeWidth;
   const strokeDasharray = 2 * Math.PI * r;
   const strokeDashoffset = strokeDasharray - (strokeDasharray * timeout) / 100;
-  // console.log(strokeDashoffset);
   const strokeColor = getColorFromPercentage(timeout);
 
   return (
@@ -55,18 +53,30 @@ export const Timeout = ({ defaultTimeout, heartbeat }) => {
       viewBox={`0 0 ${width} ${width}`}
       width={`${width}px`}
       height={`${width}px`}
+      x={x}
+      y={y}
     >
+      {/* The timeout bar */}
       <circle
         cx={width / 2}
         cy={width / 2}
-        strokeWidth={`${stokeWidth}px`}
+        strokeWidth={`${strokeWidth}px`}
         r={r}
-        fill='none'
+        fill={fill}
         stroke={strokeColor}
         strokeDasharray={strokeDasharray}
         strokeDashoffset={strokeDashoffset.toString()}
         transform={`rotate(-90 ${width / 2} ${width / 2})`}
       />
+      <text
+        x={x - r / 2}
+        y={y + 7}
+        fontFamily='Arial'
+        fontSize={r}
+        fill='white'
+      >
+        {text}
+      </text>
     </svg>
   );
 };
