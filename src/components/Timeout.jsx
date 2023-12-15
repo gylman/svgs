@@ -11,7 +11,7 @@ import styled, { keyframes, css } from 'styled-components';
 const changingPatience = css`
   ${strokeChange} 3s linear infinite;
 `;
-const Patience = styled.circle`
+const Timeout = styled.circle`
   animation: ${changingPatience};
 `;
  */
@@ -22,29 +22,33 @@ function getColorFromPercentage(percentage) {
   return `hsl(${hue}, 100%, 50%)`;
 }
 
-export const Patience = ({ timeout }) => {
-  const [patience, setPatience] = useState(timeout);
+export const Timeout = ({ defaultTimeout, heartbeat }) => {
+  const [timeout, setTimeout] = useState(defaultTimeout);
 
   useEffect(() => {
     const identifier = setInterval(() => {
-      if (patience > 0) {
-        setPatience((prevState) => prevState - 1);
+      if (timeout > 0) {
+        setTimeout((prevState) => prevState - 1);
       } else {
-        setPatience(timeout);
+        setTimeout(timeout);
       }
     }, 100);
     return () => {
       clearInterval(identifier);
     };
-  }, [patience]);
+  }, [timeout]);
+
+  useEffect(() => {
+    if (heartbeat) setTimeout(defaultTimeout);
+  }, [heartbeat]);
 
   const width = 100;
   const stokeWidth = 15;
   const r = width / 2 - stokeWidth / 2;
   const strokeDasharray = 2 * Math.PI * r;
-  const strokeDashoffset = strokeDasharray - (strokeDasharray * patience) / 100;
+  const strokeDashoffset = strokeDasharray - (strokeDasharray * timeout) / 100;
   // console.log(strokeDashoffset);
-  const strokeColor = getColorFromPercentage(patience);
+  const strokeColor = getColorFromPercentage(timeout);
 
   return (
     <svg
