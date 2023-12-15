@@ -24,10 +24,10 @@ function App() {
     <Container>
       <Canvas>
         <Patience timeout={100} />
-        <Patience timeout={45} />
-        <Patience timeout={30} />
+        <Patience timeout={90} />
         <Patience timeout={80} />
-        <Patience timeout={5} />
+        <Patience timeout={85} />
+        <Patience timeout={75} />
       </Canvas>
     </Container>
   );

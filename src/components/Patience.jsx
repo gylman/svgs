@@ -38,19 +38,24 @@ export const Patience = ({ timeout }) => {
     };
   }, [patience]);
 
-  const width = 232;
-  const r = 108.5;
+  const width = 100;
+  const stokeWidth = 15;
+  const r = width / 2 - stokeWidth / 2;
   const strokeDasharray = 2 * Math.PI * r;
   const strokeDashoffset = strokeDasharray - (strokeDasharray * patience) / 100;
   // console.log(strokeDashoffset);
   const strokeColor = getColorFromPercentage(patience);
 
   return (
-    <svg viewBox='0 0 232 232' width='232px' height='232px'>
+    <svg
+      viewBox={`0 0 ${width} ${width}`}
+      width={`${width}px`}
+      height={`${width}px`}
+    >
       <circle
         cx={width / 2}
         cy={width / 2}
-        strokeWidth='15px'
+        strokeWidth={`${stokeWidth}px`}
         r={r}
         fill='none'
         stroke={strokeColor}
