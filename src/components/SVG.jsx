@@ -1,4 +1,5 @@
 import React from 'react';
+import CircleWithText from './CircleWithText';
 
 const SVG = () => {
   return (
@@ -8,23 +9,13 @@ const SVG = () => {
       height='100%'
       xmlns='http://www.w3.org/2000/svg'
     >
-      <path
-        id='transactionPath'
-        d='M 20,50 Q 300,0 380,100'
-        fill='none'
-        stroke='red'
-        strokeWidth='2'
-      />
-
-      <circle cx='20' cy='50' r='10' fill='blue' />
-
-      <circle cx='380' cy='100' r='10' fill='green' />
-
-      <circle r='5' fill='gold'>
-        <animateMotion dur='4s' repeatCount='indefinite'>
-          <mpath href='#transactionPath' />
-        </animateMotion>
-      </circle>
+      <CircleWithText cx={0} cy={150} r={20} fill='magenta' text='U' />
+      <CircleWithText cx={200} cy={50} r={20} fill='blue' text='S1' />
+      <CircleWithText cx={200} cy={100} r={20} fill='green' text='S2' />
+      <CircleWithText cx={400} cy={150} r={20} fill='grey' text='S5' />
+      <CircleWithText cx={200} cy={200} r={20} fill='orange' text='S3' />
+      <CircleWithText cx={200} cy={250} r={20} fill='red' text='S4' />
+      <CircleWithText cx={550} cy={150} r={20} fill='purple' text='L1' />
     </svg>
   );
 };
