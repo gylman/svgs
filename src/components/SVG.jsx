@@ -11,8 +11,6 @@ const fill = 'gray';
 const params = [
   {
     id: 'user',
-    defaultTimeout: 100,
-    heartbeat: true,
     x: x,
     y: y + 2 * 𝚫y,
     r: r,
@@ -21,8 +19,6 @@ const params = [
   },
   {
     id: 's1',
-    defaultTimeout: 100,
-    heartbeat: true,
     x: x + 𝚫x,
     y: y,
     r: r,
@@ -31,8 +27,6 @@ const params = [
   },
   {
     id: 's2',
-    defaultTimeout: 100,
-    heartbeat: true,
     x: x + 𝚫x,
     y: y + 𝚫y,
     r: r,
@@ -41,8 +35,6 @@ const params = [
   },
   {
     id: 'leader',
-    defaultTimeout: 100,
-    heartbeat: true,
     x: x + 2 * 𝚫x,
     y: y + 2 * 𝚫y,
     r: r,
@@ -51,8 +43,6 @@ const params = [
   },
   {
     id: 's3',
-    defaultTimeout: 100,
-    heartbeat: true,
     x: x + 𝚫x,
     y: y + 3 * 𝚫y,
     r: r,
@@ -61,8 +51,6 @@ const params = [
   },
   {
     id: 's4',
-    defaultTimeout: 100,
-    heartbeat: true,
     x: x + 𝚫x,
     y: y + 4 * 𝚫y,
     r: r,
@@ -71,8 +59,7 @@ const params = [
   },
   {
     id: 'l1',
-    defaultTimeout: 100,
-    heartbeat: true,
+    defaultTimeout: 20,
     x: x + 3 * 𝚫x,
     y: y + 2 * 𝚫y,
     r: r,
@@ -102,23 +89,51 @@ const SVG = ({ txSentTo }) => {
     setAnimate(true);
   };
 
-  const [source] = useState({ cx: params[0].x + r, cy: params[0].y + r });
-  const [destination] = useState({ cx: params[1].x + r, cy: params[1].y + r });
-  const pathData = `M ${source.cx},${source.cy} ${destination.cx},${destination.cy}`;
+  const [source1] = useState({ cx: params[0].x + r, cy: params[0].y + r });
+  const [destination1] = useState({ cx: params[1].x + r, cy: params[1].y + r });
+  const [destination2] = useState({ cx: params[3].x + r, cy: params[3].y + r });
+  const [destination3] = useState({ cx: params[6].x + r, cy: params[6].y + r });
+  const pathData1 = `M ${source1.cx},${source1.cy} ${destination1.cx},${destination1.cy}`;
+  const pathData2 = `M ${destination1.cx},${destination1.cy} ${destination2.cx},${destination2.cy}`;
+  const pathData3 = `M ${destination2.cx},${destination2.cy} ${destination3.cx},${destination3.cy}`;
 
   return (
     <>
       <svg width='100%' height='80%' xmlns='http://www.w3.org/2000/svg'>
         <path
-          id='transactionPath'
-          d={pathData}
+          id='transactionPath1'
+          d={pathData1}
+          fill='none'
+          stroke='none'
+          strokeWidth='2'
+        />
+        <path
+          id='transactionPath2'
+          d={pathData2}
+          fill='none'
+          stroke='none'
+          strokeWidth='2'
+        />
+        <path
+          id='transactionPath3'
+          d={pathData3}
           fill='none'
           stroke='none'
           strokeWidth='2'
         />
         <circle r='5' fill='red'>
           <animateMotion dur='0.5s' repeatCount='indefinite'>
-            <mpath href='#transactionPath' />
+            <mpath href='#transactionPath1' />
+          </animateMotion>
+        </circle>
+        <circle r='5' fill='red'>
+          <animateMotion dur='0.5s' repeatCount='indefinite'>
+            <mpath href='#transactionPath2' />
+          </animateMotion>
+        </circle>
+        <circle r='5' fill='red'>
+          <animateMotion dur='0.5s' repeatCount='indefinite'>
+            <mpath href='#transactionPath3' />
           </animateMotion>
         </circle>
 
