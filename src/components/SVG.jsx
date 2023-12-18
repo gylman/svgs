@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useRef, useState } from 'react';
 import { Node } from './Node';
 
 const x = 0;
@@ -83,16 +83,48 @@ const params = [
 params;
 
 const SVG = ({ txSentTo }) => {
+  const [lineCoords, setLineCoords] = useState({ x1: 0, y1: 0, x2: 0, y2: 0 });
+  const [animate, setAnimate] = useState(false);
+  const svg1Ref = useRef();
+  const svg2Ref = useRef();
+
+  const handleButtonClick = () => {
+    const svg1 = svg1Ref.current.getBoundingClientRect();
+    const svg2 = svg2Ref.current.getBoundingClientRect();
+
+    setLineCoords({
+      x1: svg1.x + svg1.width / 2,
+      y1: svg1.y + svg1.height / 2,
+      x2: svg2.x + svg2.width / 2,
+      y2: svg2.y + svg2.height / 2,
+    });
+
+    setAnimate(true);
+  };
+
   return (
-    <svg width='100%' height='80%' xmlns='http://www.w3.org/2000/svg'>
-      <Node {...params[0]} />
-      <Node {...params[1]} />
-      <Node {...params[2]} />
-      <Node {...params[3]} />
-      <Node {...params[4]} />
-      <Node {...params[5]} />
-      <Node {...params[6]} />
-    </svg>
+    <>
+      <svg width='100%' height='80%' xmlns='http://www.w3.org/2000/svg'>
+        {' '}
+        {animate && (
+          <line
+            x1={lineCoords.x1}
+            y1={lineCoords.y1}
+            x2={lineCoords.x2}
+            y2={lineCoords.y2}
+            stroke='black'
+          />
+        )}
+        <Node id='svg1' forwardRef={svg1Ref} {...params[0]} />
+        <Node id='svg2' forwardRef={svg2Ref} {...params[1]} />
+        <Node {...params[2]} />
+        <Node {...params[3]} />
+        <Node {...params[4]} />
+        <Node {...params[5]} />
+        <Node {...params[6]} />
+      </svg>
+      <button onClick={handleButtonClick}>Animate Transaction</button>
+    </>
   );
 };
 

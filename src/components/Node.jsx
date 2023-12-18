@@ -22,7 +22,16 @@ function getColorFromPercentage(percentage) {
   return `hsl(${hue}, 100%, 50%)`;
 }
 
-export const Node = ({ defaultTimeout, heartbeat, x, y, r, fill, text }) => {
+export const Node = ({
+  defaultTimeout,
+  heartbeat,
+  x,
+  y,
+  r,
+  fill,
+  text,
+  forwardRef,
+}) => {
   const [timeout, setTimeout] = useState(defaultTimeout);
 
   useEffect(() => {
@@ -49,7 +58,13 @@ export const Node = ({ defaultTimeout, heartbeat, x, y, r, fill, text }) => {
   const strokeColor = getColorFromPercentage(timeout);
 
   return (
-    <svg width={`${width}px`} height={`${width}px`} x={x} y={y}>
+    <svg
+      width={`${width}px`}
+      height={`${width}px`}
+      x={x}
+      y={y}
+      ref={forwardRef}
+    >
       {/* The timeout bar */}
       <circle
         cx={width / 2}
