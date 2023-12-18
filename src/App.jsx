@@ -2,6 +2,7 @@ import { styled } from 'styled-components';
 import './index.css';
 // import { Timeout } from './components/Timeout';
 import { useEffect, useState } from 'react';
+import SVG from './components/SVG';
 const Container = styled.div`
   display: flex;
   align-items: center;
@@ -55,14 +56,57 @@ const Rollup = styled.div`
   border-radius: 5px;
 `;
 
+const Button = styled.div`
+  padding: 20px 10px;
+  background: red;
+  border-radius: 10px;
+  min-width: 100px;
+  display: flex;
+  justify-content: center;
+  cursor: pointer;
+  &:hover {
+    transform: translateY(-5px);
+  }
+`;
+
 function App() {
   const [heartbeat, setHeartbeat1] = useState(false);
 
   const handleClick = () => {
     setHeartbeat1(true);
   };
+  const [txSentTo, setTxSentTo] = useState('');
+  const sendTxToSeq1 = () => {
+    setTxSentTo('s1');
+  };
+  const sendTxToSeq2 = () => {
+    setTxSentTo('s2');
+  };
+  const sendTxToLeader = () => {
+    setTxSentTo('leader');
+  };
+  const sendTxToSeq3 = () => {
+    setTxSentTo('s3');
+  };
+  const sendTxToSeq4 = () => {
+    setTxSentTo('s4');
+  };
 
-  return <Container></Container>;
+  return (
+    <Container>
+      {' '}
+      <div style={{ width: '100%', height: '100%' }}>
+        <SVG txSentTo={txSentTo} />
+        <div style={{ display: 'flex', gap: 20 }}>
+          <Button onClick={sendTxToSeq1}>1</Button>
+          <Button onClick={sendTxToSeq2}>2</Button>
+          <Button onClick={sendTxToLeader}>Leader</Button>
+          <Button onClick={sendTxToSeq3}>3</Button>
+          <Button onClick={sendTxToSeq4}>4</Button>
+        </div>
+      </div>
+    </Container>
+  );
 }
 
 export default App;

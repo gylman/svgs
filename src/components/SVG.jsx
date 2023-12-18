@@ -2,10 +2,10 @@ import React from 'react';
 import { Node } from './Node';
 
 const x = 0;
-const 𝚫x = 200;
+const 𝚫x = 300;
 const y = 0;
-const 𝚫y = 100;
-const r = 20;
+const 𝚫y = 200;
+const r = 40;
 const fill = 'gray';
 
 const params = [
@@ -75,16 +75,16 @@ const params = [
     heartbeat: true,
     x: x + 3 * 𝚫x,
     y: y + 2 * 𝚫y,
-    r: 20,
+    r: r,
     fill: fill,
     text: 'l1',
   },
 ];
 params;
 
-const SVG = () => {
+const SVG = ({ txSentTo }) => {
   return (
-    <svg width='100%' height='100%' xmlns='http://www.w3.org/2000/svg'>
+    <svg width='100%' height='80%' xmlns='http://www.w3.org/2000/svg'>
       <Node {...params[0]} />
       <Node {...params[1]} />
       <Node {...params[2]} />
