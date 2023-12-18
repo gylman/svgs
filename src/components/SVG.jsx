@@ -102,19 +102,26 @@ const SVG = ({ txSentTo }) => {
     setAnimate(true);
   };
 
+  const [source] = useState({ cx: params[0].x + r, cy: params[0].y + r });
+  const [destination] = useState({ cx: params[1].x + r, cy: params[1].y + r });
+  const pathData = `M ${source.cx},${source.cy} ${destination.cx},${destination.cy}`;
+
   return (
     <>
       <svg width='100%' height='80%' xmlns='http://www.w3.org/2000/svg'>
-        {' '}
-        {animate && (
-          <line
-            x1={lineCoords.x1}
-            y1={lineCoords.y1}
-            x2={lineCoords.x2}
-            y2={lineCoords.y2}
-            stroke='black'
-          />
-        )}
+        <path
+          id='transactionPath'
+          d={pathData}
+          fill='none'
+          stroke='none'
+          strokeWidth='2'
+        />
+        <circle r='5' fill='red'>
+          <animateMotion dur='0.5s' repeatCount='indefinite'>
+            <mpath href='#transactionPath' />
+          </animateMotion>
+        </circle>
+
         <Node id='svg1' forwardRef={svg1Ref} {...params[0]} />
         <Node id='svg2' forwardRef={svg2Ref} {...params[1]} />
         <Node {...params[2]} />
