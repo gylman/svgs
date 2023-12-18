@@ -42,20 +42,14 @@ export const Node = ({ defaultTimeout, heartbeat, x, y, r, fill, text }) => {
     if (heartbeat) setTimeout(defaultTimeout);
   }, [heartbeat]);
 
-  const strokeWidth = 2;
+  const strokeWidth = 4;
   const width = 2 * r + strokeWidth;
   const strokeDasharray = 2 * Math.PI * r;
   const strokeDashoffset = strokeDasharray - (strokeDasharray * timeout) / 100;
   const strokeColor = getColorFromPercentage(timeout);
 
   return (
-    <svg
-      viewBox={`0 0 ${width} ${width}`}
-      width={`${width}px`}
-      height={`${width}px`}
-      x={x}
-      y={y}
-    >
+    <svg width={`${width}px`} height={`${width}px`} x={x} y={y}>
       {/* The timeout bar */}
       <circle
         cx={width / 2}
@@ -68,7 +62,7 @@ export const Node = ({ defaultTimeout, heartbeat, x, y, r, fill, text }) => {
         strokeDashoffset={strokeDashoffset.toString()}
         transform={`rotate(-90 ${width / 2} ${width / 2})`}
       />
-      <text
+      {/* <text
         x={x - r / 2}
         y={y + 7}
         fontFamily='Arial'
@@ -76,7 +70,7 @@ export const Node = ({ defaultTimeout, heartbeat, x, y, r, fill, text }) => {
         fill='white'
       >
         {text}
-      </text>
+      </text> */}
     </svg>
   );
 };
