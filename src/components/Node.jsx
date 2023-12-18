@@ -16,17 +16,11 @@ const Timeout = styled.circle`
 `;
  */
 
-export const Node = ({ x, y, r, fill, text, forwardRef }) => {
+export const Node = ({ x, y, r, fill, text }) => {
   const width = 2 * r;
 
   return (
-    <svg
-      width={`${width}px`}
-      height={`${width}px`}
-      x={x}
-      y={y}
-      ref={forwardRef}
-    >
+    <svg width={`${width}px`} height={`${width}px`} x={x} y={y}>
       <circle cx={r} cy={r} r={r} fill={fill} />
       {/* <text
         x={x - r / 2}
