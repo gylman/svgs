@@ -11,7 +11,7 @@ const y = 0;
 const 𝚫y = 100;
 const r = 40;
 const fill = 'gray';
-const duration = 100;
+const duration = 300;
 
 const params = {
   user: {
