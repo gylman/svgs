@@ -81,6 +81,15 @@ const logs = [
 
 const SVG = () => {
   const [currentIndex, setCurrentIndex] = useState(0);
+  const animateMotionRef = useRef(null);
+
+  useEffect(() => {
+    // Restart the animation
+    const animateMotionElement = animateMotionRef.current;
+    if (animateMotionElement) {
+      animateMotionElement.beginElement();
+    }
+  }, [currentIndex]);
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -94,19 +103,20 @@ const SVG = () => {
   const dynPathData = `M ${params[currentLog.from].x + r},${
     params[currentLog.from].y + r
   } ${params[currentLog.to].x + r},${params[currentLog.to].y + r}`;
+  const animationKey = `path-${currentIndex}`;
 
   return (
     <svg width='100%' height='80%' xmlns='http://www.w3.org/2000/svg'>
       <path
-        id={`path-${currentIndex}`}
+        id={animationKey}
         d={dynPathData}
         fill='none'
         stroke='red'
         strokeWidth='2'
       />
       <circle r='5' fill='red'>
-        <animateMotion dur='0.5s' key={currentIndex}>
-          <mpath href={`#path-${currentIndex}`} />
+        <animateMotion ref={animateMotionRef} dur='0.5s' key={currentIndex}>
+          <mpath href={`#${animationKey}`} />
         </animateMotion>
       </circle>
       {Object.values(params).map((param) => (
