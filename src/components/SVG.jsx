@@ -1,10 +1,10 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { Node } from './Node';
+import Node from './Node';
 
 const x = 0;
 const 𝚫x = 300;
 const y = 0;
-const 𝚫y = 200;
+const 𝚫y = 100;
 const r = 40;
 const fill = 'gray';
 
@@ -79,48 +79,40 @@ const logs = [
   { from: 'leader', to: 'user' },
 ];
 
-const SVG = ({ txSentTo }) => {
+const SVG = () => {
   const [currentIndex, setCurrentIndex] = useState(0);
 
   useEffect(() => {
     const interval = setInterval(() => {
       setCurrentIndex((prevIndex) => (prevIndex + 1) % logs.length);
-    }, 500); // Change the interval as needed
+    }, 500); // Adjust interval as needed
 
     return () => clearInterval(interval);
   }, []);
 
   const currentLog = logs[currentIndex];
-  const newSrc = {
-    cx: params[currentLog.from].x + r,
-    cy: params[currentLog.from].y + r,
-  };
-  const newDest = {
-    cx: params[currentLog.to].x + r,
-    cy: params[currentLog.to].y + r,
-  };
-
-  const dynPathData = `M ${newSrc.cx},${newSrc.cy} ${newDest.cx},${newDest.cy}`;
-  const animationKey = `path-${currentIndex}`; // Key based on currentIndex
+  const dynPathData = `M ${params[currentLog.from].x + r},${
+    params[currentLog.from].y + r
+  } ${params[currentLog.to].x + r},${params[currentLog.to].y + r}`;
 
   return (
-    <>
-      <svg width='100%' height='80%' xmlns='http://www.w3.org/2000/svg'>
-        <path id={animationKey} d={dynPathData} fill='none' strokeWidth='2' />
-        <circle r='5' fill='red'>
-          <animateMotion dur='0.5s' key={animationKey}>
-            <mpath href={`#${animationKey}`} />
-          </animateMotion>
-        </circle>
-        <Node {...params.user} />
-        <Node {...params.s1} />
-        <Node {...params.s2} />
-        <Node {...params.leader} />
-        <Node {...params.s3} />
-        <Node {...params.s4} />
-        <Node {...params.l1} />
-      </svg>
-    </>
+    <svg width='100%' height='80%' xmlns='http://www.w3.org/2000/svg'>
+      <path
+        id={`path-${currentIndex}`}
+        d={dynPathData}
+        fill='none'
+        stroke='red'
+        strokeWidth='2'
+      />
+      <circle r='5' fill='red'>
+        <animateMotion dur='0.5s' key={currentIndex}>
+          <mpath href={`#path-${currentIndex}`} />
+        </animateMotion>
+      </circle>
+      {Object.values(params).map((param) => (
+        <Node key={param.id} {...param} />
+      ))}
+    </svg>
   );
 };
 

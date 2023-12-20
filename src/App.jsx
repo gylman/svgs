@@ -92,21 +92,7 @@ function App() {
     setTxSentTo('s4');
   };
 
-  return (
-    <Container>
-      {' '}
-      <div style={{ width: '100%', height: '100%' }}>
-        <SVG txSentTo={txSentTo} />
-        <div style={{ display: 'flex', gap: 20 }}>
-          <Button onClick={sendTxToSeq1}>1</Button>
-          <Button onClick={sendTxToSeq2}>2</Button>
-          <Button onClick={sendTxToLeader}>Leader</Button>
-          <Button onClick={sendTxToSeq3}>3</Button>
-          <Button onClick={sendTxToSeq4}>4</Button>
-        </div>
-      </div>
-    </Container>
-  );
+  return <SVG txSentTo={txSentTo} />;
 }
 
 export default App;

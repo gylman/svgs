@@ -2,21 +2,7 @@ import React from 'react';
 import { useEffect, useState } from 'react';
 import styled, { keyframes, css } from 'styled-components';
 
-// Define the keyframes for the stroke color change
-/* const strokeChange = keyframes`
-  0%   { stroke: green; }
-  50% { stroke: yellow; }
-  100% { stroke: red; }
-`;
-const changingPatience = css`
-  ${strokeChange} 3s linear infinite;
-`;
-const Timeout = styled.circle`
-  animation: ${changingPatience};
-`;
- */
-
-export const Node = ({ x, y, r, fill, text }) => {
+const Node = React.memo(({ x, y, r, fill, text }) => {
   const width = 2 * r;
 
   return (
@@ -33,4 +19,6 @@ export const Node = ({ x, y, r, fill, text }) => {
       </text> */}
     </svg>
   );
-};
+});
+
+export default Node;
