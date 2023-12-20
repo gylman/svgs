@@ -81,50 +81,34 @@ const logs = [
 
 const SVG = ({ txSentTo }) => {
   const [currentIndex, setCurrentIndex] = useState(0);
-  const [dynSrc, setDynSrc] = useState({
-    cx: params[logs[0].from].x + r,
-    cy: params[logs[0].from].y + r,
-  });
-  const [dynDest, setDynDest] = useState({
-    cx: params[logs[0].to].x + r,
-    cy: params[logs[0].to].y + r,
-  });
-
-  const [dynPathData, setDynPathData] = useState(
-    `M ${dynSrc.cx},${dynSrc.cy} ${dynDest.cx},${dynDest.cy}`
-  );
 
   useEffect(() => {
     const interval = setInterval(() => {
-      setCurrentIndex((prevIndex) => {
-        const nextIndex = (prevIndex + 1) % logs.length;
-        setDynSrc({
-          cx: params[logs[nextIndex].from].x + r,
-          cy: params[logs[nextIndex].from].y + r,
-        });
-        setDynDest({
-          cx: params[logs[nextIndex].to].x + r,
-          cy: params[logs[nextIndex].to].y + r,
-        });
-        setDynPathData(
-          `M ${dynSrc.cx},${dynSrc.cy}  ${dynDest.cx},${dynDest.cy}`
-        );
-        console.log(dynPathData);
-        return nextIndex;
-      });
+      setCurrentIndex((prevIndex) => (prevIndex + 1) % logs.length);
     }, 500); // Change the interval as needed
 
     return () => clearInterval(interval);
   }, []);
 
-  const animationKey = `path-${dynSrc.cx}-${dynSrc.cy}-${dynDest.cx}-${dynDest.cy}`;
+  const currentLog = logs[currentIndex];
+  const newSrc = {
+    cx: params[currentLog.from].x + r,
+    cy: params[currentLog.from].y + r,
+  };
+  const newDest = {
+    cx: params[currentLog.to].x + r,
+    cy: params[currentLog.to].y + r,
+  };
+
+  const dynPathData = `M ${newSrc.cx},${newSrc.cy} ${newDest.cx},${newDest.cy}`;
+  const animationKey = `path-${currentIndex}`; // Key based on currentIndex
 
   return (
     <>
       <svg width='100%' height='80%' xmlns='http://www.w3.org/2000/svg'>
         <path id={animationKey} d={dynPathData} fill='none' strokeWidth='2' />
         <circle r='5' fill='red'>
-          <animateMotion dur='0.5s'>
+          <animateMotion dur='0.5s' key={animationKey}>
             <mpath href={`#${animationKey}`} />
           </animateMotion>
         </circle>
