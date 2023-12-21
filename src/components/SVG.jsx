@@ -4,6 +4,10 @@ import React, {
   useState,
 } from 'react';
 import Node from './Node';
+import {
+  initialParams,
+  logs,
+} from '../assets/data';
 
 const x = 0;
 const 𝚫x = 300;
@@ -13,134 +17,11 @@ const r = 40;
 const fill = 'gray';
 const duration = 700;
 
-const params = {
-  user: {
-    id: 'user',
-    x: x,
-    y: y + 2 * 𝚫y,
-    r: r,
-    fill: fill,
-    text: 'u',
-  },
-  s1: {
-    id: 's1',
-    x: x + 𝚫x,
-    y: y,
-    r: r,
-    fill: fill,
-    text: 's1',
-  },
-  s2: {
-    id: 's2',
-    x: x + 𝚫x,
-    y: y + 𝚫y,
-    r: r,
-    fill: fill,
-    text: 's2',
-  },
-  leader: {
-    id: 'leader',
-    x: x + 2 * 𝚫x,
-    y: y + 2 * 𝚫y,
-    r: r,
-    fill: fill,
-    text: 'leader',
-  },
-  s3: {
-    id: 's3',
-    x: x + 𝚫x,
-    y: y + 3 * 𝚫y,
-    r: r,
-    fill: fill,
-    text: 's3',
-  },
-  s4: {
-    id: 's4',
-    x: x + 𝚫x,
-    y: y + 4 * 𝚫y,
-    r: r,
-    fill: fill,
-    text: 's4',
-  },
-  l1: {
-    id: 'l1',
-    x: x + 3 * 𝚫x,
-    y: y + 2 * 𝚫y,
-    r: r,
-    fill: fill,
-    text: 'l1',
-  },
-};
-
-const logs = [
-  { from: 'user', to: 's1', message: 'tx' },
-  { from: 's1', to: 'leader', message: 'tx' },
-  { from: 'leader', to: 's4', message: 'order' },
-  { from: 'leader', to: 's1', message: 'order' },
-  { from: 's1', to: 'user', message: 'order' },
-  { from: 'leader', to: 'l1', message: 'block' },
-  { from: 'user', to: 'leader', message: 'tx' },
-  { from: 'leader', to: 's4', message: 'order' },
-  {
-    from: 'leader',
-    to: 'user',
-    message: 'order',
-  },
-  { from: 'user', to: 's1', message: 'tx' },
-  { from: 's1', to: 'leader', message: 'tx' },
-  { from: 'leader', to: 's4', message: 'order' },
-  { from: 'leader', to: 's1', message: 'order' },
-  { from: 's1', to: 'user', message: 'order' },
-  { from: 'leader', to: 'l1', message: 'block' },
-  { from: 'user', to: 'leader', message: 'tx' },
-  { from: 'leader', to: 's4', message: 'order' },
-  {
-    from: 'leader',
-    to: 'user',
-    message: 'order',
-  },
-  { from: 'user', to: 's1', message: 'tx' },
-  { from: 's1', to: 'leader', message: 'tx' },
-  { from: 'leader', to: 's4', message: 'order' },
-  { from: 'leader', to: 's1', message: 'order' },
-  { from: 's1', to: 'user', message: 'order' },
-  { from: 'leader', to: 'l1', message: 'block' },
-  { from: 'user', to: 'leader', message: 'tx' },
-  { from: 'leader', to: 's4', message: 'order' },
-  {
-    from: 'leader',
-    to: 'user',
-    message: 'order',
-  },
-  { from: 'user', to: 's1', message: 'tx' },
-  { from: 's1', to: 'leader', message: 'tx' },
-  { from: 'leader', to: 's4', message: 'order' },
-  { from: 'leader', to: 's1', message: 'order' },
-  { from: 's1', to: 'user', message: 'order' },
-  { from: 'leader', to: 'l1', message: 'block' },
-  { from: 'user', to: 'leader', message: 'tx' },
-  { from: 'leader', to: 's4', message: 'order' },
-  {
-    from: 'leader',
-    to: 'user',
-    message: 'order',
-  },
-  { from: 'user', to: 's1', message: 'tx' },
-  { from: 's1', to: 'leader', message: 'tx' },
-  { from: 'leader', to: 's4', message: 'order' },
-  { from: 'leader', to: 's1', message: 'order' },
-  { from: 's1', to: 'user', message: 'order' },
-  { from: 'leader', to: 'l1', message: 'block' },
-  { from: 'user', to: 'leader', message: 'tx' },
-  { from: 'leader', to: 's4', message: 'order' },
-  {
-    from: 'leader',
-    to: 'user',
-    message: 'order',
-  },
-];
-
 const SVG = () => {
+  const [params, setParams] = useState(
+    initialParams
+  );
+
   const [currentIndex, setCurrentIndex] =
     useState(0);
   const animateMotionRef = useRef(null);
@@ -235,11 +116,6 @@ const SVG = () => {
           </animateMotion>
         </g>
       )}
-      {/* <circle r='5' fill='red'>
-        <animateMotion ref={animateMotionRef} dur='0.5s' key={currentIndex}>
-          <mpath href={`#${animationKey}`} />
-        </animateMotion>
-      </circle> */}
       {Object.values(params).map((param) => (
         <Node key={param.id} {...param} />
       ))}
