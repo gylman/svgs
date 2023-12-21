@@ -36,6 +36,12 @@ export const logs = [
     message: 'order',
     role: 'follower',
   },
+  {
+    from: 'leader',
+    to: 'l1',
+    message: 'block',
+    role: 'follower',
+  },
 ];
 
 export const initialParams = {
