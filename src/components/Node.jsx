@@ -6,7 +6,7 @@ import styled, {
 } from 'styled-components';
 
 const Node = React.memo(
-  ({ x, y, r, fill, text }) => {
+  ({ x, y, r, fill, id }) => {
     const width = 2 * r;
     const fontSize = 20; // Adjusted font size
     const textX = r; // Center horizontally
@@ -30,7 +30,7 @@ const Node = React.memo(
           textAnchor='middle'
           dominantBaseline='central' // Helps in vertical centering
         >
-          {text}
+          {id}
         </text>
       </svg>
     );

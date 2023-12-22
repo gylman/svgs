@@ -9,12 +9,7 @@ import {
   logs,
 } from '../assets/data';
 
-const x = 0;
-const 𝚫x = 300;
-const y = 0;
-const 𝚫y = 100;
 const r = 40;
-const fill = 'gray';
 const duration = 1000;
 
 const SVG = () => {
@@ -53,7 +48,7 @@ const SVG = () => {
     params[currentLog.to].x + r
   },${params[currentLog.to].y + r}`;
   const animationKey = `path-${currentIndex}`;
-  const message = currentLog.message;
+  const data = currentLog.data;
 
   return (
     <svg
@@ -68,7 +63,7 @@ const SVG = () => {
         // stroke='red'
         strokeWidth='2'
       />
-      {message === 'tx' && (
+      {data === 'tx' && (
         <g transform='translate(-20, -20)'>
           <path
             fill='#ffc107'
@@ -91,7 +86,7 @@ const SVG = () => {
           </animateMotion>
         </g>
       )}
-      {message === 'order' && (
+      {data === 'oc' && (
         <g
           transform={`translate(-20, -20) scale(2)`}
         >
@@ -110,7 +105,7 @@ const SVG = () => {
           </animateMotion>
         </g>
       )}
-      {message === 'block' && (
+      {data === 'block' && (
         <g
           transform={`translate(-20, -20) scale(2)`}
         >
