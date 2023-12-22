@@ -42,51 +42,29 @@ const SVG = () => {
   }, []);
 
   useEffect(() => {
-    if (
-      logs[currentIndex].from === 'u' &&
-      params.u.id !== logs[currentIndex].fid
-    )
-      setParams((prevState) => {
-        const newState = { ...prevState };
-        newState.u.id = logs[currentIndex].fid;
-        return newState;
-      });
-    if (
-      logs[currentIndex].to === 'u' &&
-      params.u.id !== logs[currentIndex].tid
-    )
-      setParams((prevState) => {
-        const newState = { ...prevState };
-        newState.u.id = logs[currentIndex].tid;
-        return newState;
-      });
-    if (
-      logs[currentIndex].from === 'r' &&
-      params.r.id !== logs[currentIndex].fid
-    )
-      setParams((prevState) => {
-        const newState = { ...prevState };
-        newState.r.id = logs[currentIndex].fid;
-        return newState;
-      });
-    if (
-      logs[currentIndex].to === 'r' &&
-      params.r.id !== logs[currentIndex].tid
-    )
-      setParams((prevState) => {
-        const newState = { ...prevState };
-        newState.r.id = logs[currentIndex].tid;
-        return newState;
-      });
+    const updateParams = (key, newId) => {
+      if (params[key].id !== newId) {
+        setParams((prevState) => ({
+          ...prevState,
+          [key]: { ...prevState[key], id: newId },
+        }));
+      }
+    };
 
-    if (logs[currentIndex].data === 'lc')
-      setParams((prevState) => {
-        const newState = { ...prevState };
-        newState.l.id = logs[currentIndex].tid;
-        newState[logs[currentIndex].to].id =
-          logs[currentIndex].fid;
-        return newState;
-      });
+    const currentLog = logs[currentIndex];
+    updateParams(currentLog.from, currentLog.fid);
+    updateParams(currentLog.to, currentLog.tid);
+
+    if (currentLog.data === 'lc') {
+      setParams((prevState) => ({
+        ...prevState,
+        l: { ...prevState.l, id: currentLog.tid },
+        [currentLog.to]: {
+          ...prevState[currentLog.to],
+          id: currentLog.fid,
+        },
+      }));
+    }
   }, [currentIndex]);
 
   let dynPathData;
