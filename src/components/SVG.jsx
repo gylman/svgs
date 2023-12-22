@@ -10,7 +10,7 @@ import {
 } from '../assets/data';
 
 const r = 40;
-const duration = 1000;
+const duration = 1500;
 
 const SVG = () => {
   const [params, setParams] = useState(
@@ -36,19 +36,104 @@ const SVG = () => {
         (prevIndex) =>
           (prevIndex + 1) % logs.length
       );
+      // console.log(
+      //   currentIndex,
+      //   params[logs[currentIndex].from].id,
+      //   logs[currentIndex].fid
+      // );
+      // console.log(
+      //   currentIndex,
+      //   params[logs[currentIndex].to].id,
+      //   logs[currentIndex].tid
+      // );
     }, duration); // Adjust interval as needed
 
     return () => clearInterval(interval);
   }, []);
 
+  useEffect(() => {
+    // if (
+    //   params[logs[currentIndex].from].id !==
+    //   logs[currentIndex].fid
+    // )
+    //   setParams((prevState) => {
+    //     console.log('we are in');
+
+    //     const newState = { ...prevState };
+    //     newState[logs[currentIndex].from].id =
+    //       logs[currentIndex].fid;
+    //     return newState;
+    //   });
+    // if (
+    //   params[logs[currentIndex].to].id !==
+    //   logs[currentIndex].tid
+    // )
+    //   setParams((prevState) => {
+    //     const newState = { ...prevState };
+    //     newState[logs[currentIndex].to].id =
+    //       logs[currentIndex].tid;
+    //     return newState;
+    //   });
+
+    if (
+      logs[currentIndex].from === 'u' &&
+      params.u.id !== logs[currentIndex].fid
+    )
+      setParams((prevState) => {
+        const newState = { ...prevState };
+        newState.u.id = logs[currentIndex].fid;
+        return newState;
+      });
+    if (
+      logs[currentIndex].to === 'u' &&
+      params.u.id !== logs[currentIndex].tid
+    )
+      setParams((prevState) => {
+        const newState = { ...prevState };
+        newState.u.id = logs[currentIndex].tid;
+        return newState;
+      });
+    if (
+      logs[currentIndex].from === 'r' &&
+      params.r.id !== logs[currentIndex].fid
+    )
+      setParams((prevState) => {
+        const newState = { ...prevState };
+        newState.r.id = logs[currentIndex].fid;
+        return newState;
+      });
+    if (
+      logs[currentIndex].to === 'r' &&
+      params.r.id !== logs[currentIndex].tid
+    )
+      setParams((prevState) => {
+        const newState = { ...prevState };
+        newState.r.id = logs[currentIndex].tid;
+        return newState;
+      });
+
+    if (logs[currentIndex].data === 'lc')
+      setParams((prevState) => {
+        const newState = { ...prevState };
+        newState.l.id = logs[currentIndex].tid;
+        newState[logs[currentIndex].to].id =
+          logs[currentIndex].fid;
+        return newState;
+      });
+  }, [currentIndex]);
+
+  let dynPathData;
+  let animationKey;
   const currentLog = logs[currentIndex];
-  const dynPathData = `M ${
-    params[currentLog.from].x + r
-  },${params[currentLog.from].y + r} ${
-    params[currentLog.to].x + r
-  },${params[currentLog.to].y + r}`;
-  const animationKey = `path-${currentIndex}`;
   const data = currentLog.data;
+  if (data !== 'lc') {
+    dynPathData = `M ${
+      params[currentLog.from].x + r
+    },${params[currentLog.from].y + r} ${
+      params[currentLog.to].x + r
+    },${params[currentLog.to].y + r}`;
+    animationKey = `path-${currentIndex}`;
+  }
 
   return (
     <svg
@@ -63,7 +148,7 @@ const SVG = () => {
         // stroke='red'
         strokeWidth='2'
       />
-      {data === 'tx' && (
+      {(data === 'tx' || data === 'lc') && (
         <g transform='translate(-20, -20)'>
           <path
             fill='#ffc107'
@@ -86,7 +171,7 @@ const SVG = () => {
           </animateMotion>
         </g>
       )}
-      {data === 'oc' && (
+      {(data === 'oc' || data === 'lc') && (
         <g
           transform={`translate(-20, -20) scale(2)`}
         >
@@ -105,7 +190,7 @@ const SVG = () => {
           </animateMotion>
         </g>
       )}
-      {data === 'block' && (
+      {(data === 'block' || data === 'lc') && (
         <g
           transform={`translate(-20, -20) scale(2)`}
         >
@@ -122,9 +207,11 @@ const SVG = () => {
           </animateMotion>
         </g>
       )}
-      {Object.values(params).map((param) => (
-        <Node key={param.id} {...param} />
-      ))}
+      {Object.values(params).map(
+        (param, index) => (
+          <Node key={index} {...param} />
+        )
+      )}
     </svg>
   );
 };
