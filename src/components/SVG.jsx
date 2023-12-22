@@ -36,45 +36,12 @@ const SVG = () => {
         (prevIndex) =>
           (prevIndex + 1) % logs.length
       );
-      // console.log(
-      //   currentIndex,
-      //   params[logs[currentIndex].from].id,
-      //   logs[currentIndex].fid
-      // );
-      // console.log(
-      //   currentIndex,
-      //   params[logs[currentIndex].to].id,
-      //   logs[currentIndex].tid
-      // );
     }, duration); // Adjust interval as needed
 
     return () => clearInterval(interval);
   }, []);
 
   useEffect(() => {
-    // if (
-    //   params[logs[currentIndex].from].id !==
-    //   logs[currentIndex].fid
-    // )
-    //   setParams((prevState) => {
-    //     console.log('we are in');
-
-    //     const newState = { ...prevState };
-    //     newState[logs[currentIndex].from].id =
-    //       logs[currentIndex].fid;
-    //     return newState;
-    //   });
-    // if (
-    //   params[logs[currentIndex].to].id !==
-    //   logs[currentIndex].tid
-    // )
-    //   setParams((prevState) => {
-    //     const newState = { ...prevState };
-    //     newState[logs[currentIndex].to].id =
-    //       logs[currentIndex].tid;
-    //     return newState;
-    //   });
-
     if (
       logs[currentIndex].from === 'u' &&
       params.u.id !== logs[currentIndex].fid
