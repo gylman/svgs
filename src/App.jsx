@@ -1,98 +1,54 @@
-import { styled } from 'styled-components';
-import './index.css';
-// import { Timeout } from './components/Timeout';
-import { useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
+import axios from 'axios';
 import SVG from './components/SVG';
-const Container = styled.div`
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 100%;
-  height: 100%;
-`;
 
-const Canvas = styled.div`
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  width: 50%;
-  height: 50%;
-  background: white;
-  border-radius: 10px;
-  padding: 10px;
-`;
+const token = import.meta.env.VITE_INFLUXDB_TOKEN;
+const url = import.meta.env.VITE_INFLUXDB_URL;
+const org = 'RadiusLab';
+const bucket = 'logylman';
 
-const User = styled.div`
-  border-radius: 50%;
-  width: 40px;
-  height: 40px;
-  background-color: orange;
-`;
-
-const Seqs = styled.div`
-  position: relative;
-  justify-content: center;
-  align-items: center;
-  height: 100%;
-  background-color: red;
-  width: 100%;
-`;
-
-const SeqWrapper = styled.div`
-  position: absolute;
-  background: blue;
-  top: ${({ top }) => top};
-  left: ${({ left }) => left};
-`;
-
-const Rollup = styled.div`
-  height: 100%;
-  width: 30px;
-  background-color: darkblue;
-  display: flex;
-  color: white;
-  align-items: center;
-  justify-content: center;
-  border-radius: 5px;
-`;
-
-const Button = styled.div`
-  padding: 20px 10px;
-  background: red;
-  border-radius: 10px;
-  min-width: 100px;
-  display: flex;
-  justify-content: center;
-  cursor: pointer;
-  &:hover {
-    transform: translateY(-5px);
-  }
+const query = `
+from(bucket: "${bucket}")
+  |> range(start: -1d)
+  |> filter(fn: (r) => r._measurement == "logEntry")
+  |> pivot(rowKey:["_time"], columnKey: ["_field"], valueColumn: "_value")
 `;
 
 function App() {
-  const [heartbeat, setHeartbeat1] = useState(false);
+  const [constructed, setConstructed] = useState([]);
+  const [isDataLoaded, setIsDataLoaded] = useState(false);
 
-  const handleClick = () => {
-    setHeartbeat1(true);
-  };
-  const [txSentTo, setTxSentTo] = useState('');
-  const sendTxToSeq1 = () => {
-    setTxSentTo('s1');
-  };
-  const sendTxToSeq2 = () => {
-    setTxSentTo('s2');
-  };
-  const sendTxToLeader = () => {
-    setTxSentTo('leader');
-  };
-  const sendTxToSeq3 = () => {
-    setTxSentTo('s3');
-  };
-  const sendTxToSeq4 = () => {
-    setTxSentTo('s4');
-  };
+  async function queryData() {
+    const headers = {
+      Authorization: `Token ${token}`,
+      'Content-Type': 'application/json',
+    };
 
-  return <SVG txSentTo={txSentTo} />;
+    const data = {
+      query: query,
+      type: 'flux',
+    };
+
+    try {
+      const response = await axios.post(`${url}/api/v2/query?org=${org}`, data, { headers });
+      const newData = response.data
+        .split('\n')
+        .map((line) => line.split(','))
+        .filter((arr, index) => arr.length > 1 && index !== 0)
+        .map((arr) => ({ data: arr[7], fid: arr[8], from: arr[9], tid: arr[10], to: arr[11].slice(0, -1) }));
+
+      setConstructed(newData);
+      setIsDataLoaded(true);
+    } catch (error) {
+      console.error('QUERY ERROR', error);
+    }
+  }
+
+  useEffect(() => {
+    queryData();
+  }, []);
+
+  return isDataLoaded ? <SVG logs={constructed} /> : <></>;
 }
 
 export default App;
