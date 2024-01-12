@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import SVG from './components/SVG';
+import Liveness from './components/LIVENESS';
 
 const token = import.meta.env.VITE_INFLUXDB_TOKEN;
 const url = import.meta.env.VITE_INFLUXDB_URL;
@@ -48,7 +49,7 @@ function App() {
     queryData();
   }, []);
 
-  return isDataLoaded ? <SVG logs={constructed} /> : <></>;
+  return <Liveness />;
 }
 
 export default App;
