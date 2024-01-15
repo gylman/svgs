@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from 'react';
-import axios from 'axios';
+// import axios from 'axios';
 import SVG from './components/SVG';
 import Liveness from './components/LIVENESS';
+import Test from './components/Test';
 
 const token = import.meta.env.VITE_INFLUXDB_TOKEN;
 const url = import.meta.env.VITE_INFLUXDB_URL;
@@ -19,35 +20,35 @@ function App() {
   const [constructed, setConstructed] = useState([]);
   const [isDataLoaded, setIsDataLoaded] = useState(false);
 
-  async function queryData() {
-    const headers = {
-      Authorization: `Token ${token}`,
-      'Content-Type': 'application/json',
-    };
+  // async function queryData() {
+  //   const headers = {
+  //     Authorization: `Token ${token}`,
+  //     'Content-Type': 'application/json',
+  //   };
 
-    const data = {
-      query: query,
-      type: 'flux',
-    };
+  //   const data = {
+  //     query: query,
+  //     type: 'flux',
+  //   };
 
-    try {
-      const response = await axios.post(`${url}/api/v2/query?org=${org}`, data, { headers });
-      const newData = response.data
-        .split('\n')
-        .map((line) => line.split(','))
-        .filter((arr, index) => arr.length > 1 && index !== 0)
-        .map((arr) => ({ data: arr[7], fid: arr[8], from: arr[9], tid: arr[10], to: arr[11].slice(0, -1) }));
+  //   try {
+  //     const response = await axios.post(`${url}/api/v2/query?org=${org}`, data, { headers });
+  //     const newData = response.data
+  //       .split('\n')
+  //       .map((line) => line.split(','))
+  //       .filter((arr, index) => arr.length > 1 && index !== 0)
+  //       .map((arr) => ({ data: arr[7], fid: arr[8], from: arr[9], tid: arr[10], to: arr[11].slice(0, -1) }));
 
-      setConstructed(newData);
-      setIsDataLoaded(true);
-    } catch (error) {
-      console.error('QUERY ERROR', error);
-    }
-  }
+  //     setConstructed(newData);
+  //     setIsDataLoaded(true);
+  //   } catch (error) {
+  //     console.error('QUERY ERROR', error);
+  //   }
+  // }
 
-  useEffect(() => {
-    queryData();
-  }, []);
+  // useEffect(() => {
+  //   queryData();
+  // }, []);
 
   return <Liveness />;
 }

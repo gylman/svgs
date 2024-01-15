@@ -59,6 +59,38 @@ const Liveness = () => {
   return (
     <svg width='1119' height='494' viewBox='0 0 1119 494' fill='none' xmlns='http://www.w3.org/2000/svg'>
       <g clipPath='url(#clip0_6_1369)'>
+        <path id='toppest-left' d='M137 170V86C137 72.1929 148.193 61 162 61H378' stroke='#E2E2E2' strokeWidth='2' />
+        <path id='top-left' d='M137 170V162C137 148.193 148.193 137 162 137H378' stroke='#E2E2E2' strokeWidth='2' />
+        <path id='mid' d='M176 208L662 208' stroke='#E2E2E2' strokeWidth='2' />
+
+        <path id='bottom-left' d='M137 246V254C137 267.807 148.193 279 162 279H378' stroke='#E2E2E2' strokeWidth='2' />
+        <path
+          id='bottomest-left'
+          d='M137 246V330C137 343.807 148.193 355 162 355H378'
+          stroke='#E2E2E2'
+          strokeWidth='2'
+        />
+        <path id='toppest-right' d='M701 170V86C701 72.1929 689.807 61 676 61H460' stroke='#E2E2E2' strokeWidth='2' />
+        <path id='top-right' d='M701 170V162C701 148.193 689.807 137 676 137H460' stroke='#E2E2E2' strokeWidth='2' />
+        <path id='bottom-right' d='M701 246V254C701 267.807 689.807 279 676 279H460' stroke='#E2E2E2' strokeWidth='2' />
+        <path
+          id='bottomest-right'
+          d='M701 246V330C701 343.807 689.807 355 676 355H460'
+          stroke='#E2E2E2'
+          strokeWidth='2'
+        />
+        <path
+          id='top-r'
+          d='M738 208H900.5C914.307 208 925.5 196.807 925.5 183V150.5C925.5 142.492 931.992 136 940 136V136'
+          stroke='#E2E2E2'
+          strokeWidth='2'
+        />
+        <path
+          id='bottom-r'
+          d='M738 208H900.5C914.307 208 925.5 219.193 925.5 233V265.5C925.5 273.508 931.992 280 940 280V280'
+          stroke='#E2E2E2'
+          strokeWidth='2'
+        />
         <g>
           <rect x='957' y='112' width='52' height='44' fill='white' stroke='#9377FF' strokeWidth='2' />
           <path
@@ -161,7 +193,6 @@ const Liveness = () => {
           <circle cx='443.5' cy='161.5' r='1.5' fill='white' />
           <circle cx='414.5' cy='171.5' r='1.5' fill='#9377FF' />
         </g>
-        <path id='mid' d='M176 208L662 208' stroke='#E2E2E2' strokeWidth='2' />
         <g>
           <path
             d='M391.421 332.323L419 316.159L446.579 332.323V364.677L419 380.841L391.421 364.677V332.323Z'
@@ -246,40 +277,9 @@ const Liveness = () => {
           </g>
           <circle cx='140' cy='199' r='22.25' stroke='#9377FF' strokeWidth='1.5' />
         </g>
-        <path
-          id='top-r'
-          d='M738 208H900.5C914.307 208 925.5 196.807 925.5 183V150.5C925.5 142.492 931.992 136 940 136V136'
-          stroke='#E2E2E2'
-          strokeWidth='2'
-        />
-        <path
-          id='bottom-r'
-          d='M738 208H900.5C914.307 208 925.5 219.193 925.5 233V265.5C925.5 273.508 931.992 280 940 280V280'
-          stroke='#E2E2E2'
-          strokeWidth='2'
-        />
-        <path id='top-left' d='M137 170V162C137 148.193 148.193 137 162 137H378' stroke='#E2E2E2' strokeWidth='2' />
-        <path id='toppest-left' d='M137 170V86C137 72.1929 148.193 61 162 61H378' stroke='#E2E2E2' strokeWidth='2' />
 
-        <path id='top-right' d='M701 170V162C701 148.193 689.807 137 676 137H460' stroke='#E2E2E2' strokeWidth='2' />
-        <path id='toppest-right' d='M701 170V86C701 72.1929 689.807 61 676 61H460' stroke='#E2E2E2' strokeWidth='2' />
-
-        <path id='bottom-left' d='M137 246V254C137 267.807 148.193 279 162 279H378' stroke='#E2E2E2' strokeWidth='2' />
-        <path
-          id='bottomest-left'
-          d='M137 246V330C137 343.807 148.193 355 162 355H378'
-          stroke='#E2E2E2'
-          strokeWidth='2'
-        />
-        <path id='bottom-right' d='M701 246V254C701 267.807 689.807 279 676 279H460' stroke='#E2E2E2' strokeWidth='2' />
-        <path
-          id='bottomest-right'
-          d='M701 246V330C701 343.807 689.807 355 676 355H460'
-          stroke='#E2E2E2'
-          strokeWidth='2'
-        />
         <circle r='5' fill='blue'>
-          <animateMotion dur='2s' repeatCount='indefinite'>
+          <animateMotion dur={`${duration / 1000}s`} repeatCount='indefinite'>
             <mpath href={`#${motionPath}`} />
           </animateMotion>
         </circle>
