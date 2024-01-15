@@ -4,29 +4,29 @@ import { dbData } from '../assets/data';
 const duration = 3000;
 
 const paths = {
-  uf0: 'toppest-left',
-  f0u: 'toppest-left',
-  uf1: 'top-left',
-  f1u: 'top-left',
-  f2u: 'bottom-left',
-  uf2: 'bottom-left',
-  uf3: 'bottomest-left',
-  f3u: 'bottomest-left',
+  uf0: 'uf0',
+  f0u: 'uf0',
+  uf1: 'uf1',
+  f1u: 'uf1',
+  uf2: 'uf2',
+  f2u: 'uf2',
+  uf3: 'uf3',
+  f3u: 'uf3',
 
-  ul: 'mid',
-  lu: 'mid',
+  ul: 'ul',
+  lu: 'ul',
 
-  f0l: 'toppest-right',
-  lf0: 'toppest-right',
-  f1l: 'top-right',
-  lf1: 'top-right',
-  f2l: 'bottom-right',
-  lf2: 'bottom-right',
-  f3l: 'bottomest-right',
-  lf3: 'bottomest-right',
+  f0l: 'f0l',
+  lf0: 'f0l',
+  f1l: 'f1l',
+  lf1: 'f1l',
+  f2l: 'f2l',
+  lf2: 'f2l',
+  f3l: 'f3l',
+  lf3: 'f3l',
 
-  lr0: 'top-r',
-  lr1: 'bottom-r',
+  lr0: 'lr0',
+  lr1: 'lr1',
 };
 
 const Liveness = () => {
@@ -53,40 +53,31 @@ const Liveness = () => {
   }, []);
 
   const currentLog = logs[currentIndex];
+
   const motionPath = paths[currentLog.from + currentLog.to];
   console.log(currentLog);
 
   return (
     <svg width='1119' height='494' viewBox='0 0 1119 494' fill='none' xmlns='http://www.w3.org/2000/svg'>
       <g clipPath='url(#clip0_6_1369)'>
-        <path id='toppest-left' d='M137 170V86C137 72.1929 148.193 61 162 61H378' stroke='#E2E2E2' strokeWidth='2' />
-        <path id='top-left' d='M137 170V162C137 148.193 148.193 137 162 137H378' stroke='#E2E2E2' strokeWidth='2' />
-        <path id='mid' d='M176 208L662 208' stroke='#E2E2E2' strokeWidth='2' />
+        <path id='uf0' d='M137 170V86C137 72.1929 148.193 61 162 61H378' stroke='#E2E2E2' strokeWidth='2' />
+        <path id='uf1' d='M137 170V162C137 148.193 148.193 137 162 137H378' stroke='#E2E2E2' strokeWidth='2' />
+        <path id='ul' d='M176 208L662 208' stroke='#E2E2E2' strokeWidth='2' />
 
-        <path id='bottom-left' d='M137 246V254C137 267.807 148.193 279 162 279H378' stroke='#E2E2E2' strokeWidth='2' />
+        <path id='uf2' d='M137 246V254C137 267.807 148.193 279 162 279H378' stroke='#E2E2E2' strokeWidth='2' />
+        <path id='uf3' d='M137 246V330C137 343.807 148.193 355 162 355H378' stroke='#E2E2E2' strokeWidth='2' />
+        <path id='f0l' d='M701 170V86C701 72.1929 689.807 61 676 61H460' stroke='#E2E2E2' strokeWidth='2' />
+        <path id='f1l' d='M701 170V162C701 148.193 689.807 137 676 137H460' stroke='#E2E2E2' strokeWidth='2' />
+        <path id='f2l' d='M701 246V254C701 267.807 689.807 279 676 279H460' stroke='#E2E2E2' strokeWidth='2' />
+        <path id='f3l' d='M701 246V330C701 343.807 689.807 355 676 355H460' stroke='#E2E2E2' strokeWidth='2' />
         <path
-          id='bottomest-left'
-          d='M137 246V330C137 343.807 148.193 355 162 355H378'
-          stroke='#E2E2E2'
-          strokeWidth='2'
-        />
-        <path id='toppest-right' d='M701 170V86C701 72.1929 689.807 61 676 61H460' stroke='#E2E2E2' strokeWidth='2' />
-        <path id='top-right' d='M701 170V162C701 148.193 689.807 137 676 137H460' stroke='#E2E2E2' strokeWidth='2' />
-        <path id='bottom-right' d='M701 246V254C701 267.807 689.807 279 676 279H460' stroke='#E2E2E2' strokeWidth='2' />
-        <path
-          id='bottomest-right'
-          d='M701 246V330C701 343.807 689.807 355 676 355H460'
-          stroke='#E2E2E2'
-          strokeWidth='2'
-        />
-        <path
-          id='top-r'
+          id='lr0'
           d='M738 208H900.5C914.307 208 925.5 196.807 925.5 183V150.5C925.5 142.492 931.992 136 940 136V136'
           stroke='#E2E2E2'
           strokeWidth='2'
         />
         <path
-          id='bottom-r'
+          id='lr1'
           d='M738 208H900.5C914.307 208 925.5 219.193 925.5 233V265.5C925.5 273.508 931.992 280 940 280V280'
           stroke='#E2E2E2'
           strokeWidth='2'
