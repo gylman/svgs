@@ -78,14 +78,14 @@ export const dbData = [
   {
     from: 'l',
     fid: '0xE',
-    to: 'r',
+    to: 'r0',
     tid: '0xY',
     data: 'block',
   },
   {
     from: 'l',
     fid: '0xE',
-    to: 'r',
+    to: 'r1',
     tid: '0xZ',
     data: 'block',
   },
