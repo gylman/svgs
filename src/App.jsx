@@ -17,8 +17,8 @@ from(bucket: "${bucket}")
 `;
 
 function App() {
-  const [constructed, setConstructed] = useState([]);
-  const [isDataLoaded, setIsDataLoaded] = useState(false);
+  // const [constructed, setConstructed] = useState([]);
+  // const [isDataLoaded, setIsDataLoaded] = useState(false);
 
   // async function queryData() {
   //   const headers = {
@@ -50,7 +50,7 @@ function App() {
   //   queryData();
   // }, []);
 
-  return <Test />;
+  return <Liveness />;
 }
 
 export default App;
