@@ -30,8 +30,8 @@ const paths = {
   lr1: 'lr1',
 };
 
-function getColorByLogData(logData) {
-  switch (logData) {
+function getColorByLogData(data) {
+  switch (data) {
     case 'tx':
       return '#FF5656';
     case 'oc':
@@ -45,9 +45,55 @@ function getColorByLogData(logData) {
   }
 }
 
+function getFilterByLogData(data) {
+  switch (data) {
+    case 'tx':
+      return {
+        u: 'url(#filter0_d_106_4195)',
+
+        f0: 'url(#filter1_d_106_4195)',
+        f1: 'url(#filter2_d_106_4195)',
+        f2: 'url(#filter3_d_106_4195)',
+        f3: 'url(#filter4_d_106_4195)',
+
+        l: 'url(#filter5_d_106_4195)',
+      };
+    case 'oc':
+      return {
+        u: 'url(#filter0_d_106_4932)',
+
+        f0: 'url(#filter1_d_106_4932)',
+        f1: 'url(#filter2_d_106_4932)',
+        f2: 'url(#filter3_d_106_4932)',
+        f3: 'url(#filter4_d_106_4932)',
+
+        f4: 'url(#filter5_d_106_4195)',
+      };
+    case 'block':
+      return { l: 'url(#filter0_d_138_1546)', r0: 'url(#filter1_d_138_1546)', r1: 'url(#filter2_d_138_1546)' };
+    case 'lc':
+      return {
+        f0: 'url(#filter0_d_138_733)',
+        f1: 'url(#filter1_d_138_733)',
+        f2: 'url(#filter2_d_138_733)',
+        f3: 'url(#filter3_d_138_733)',
+        l: 'url(#filter4_d_138_733)',
+      };
+    default:
+      return null;
+  }
+}
+
 function getHighlightColor(currentLog, node) {
   if (currentLog.from === node || currentLog.to === node) {
     return getColorByLogData(currentLog.data) || 'transparent';
+  }
+  return 'transparent';
+}
+
+function getFilterColor(currentLog, node) {
+  if (currentLog.from === node || currentLog.to === node) {
+    return getFilterByLogData(currentLog.data)[node] || 'transparent';
   }
   return 'transparent';
 }
