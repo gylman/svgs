@@ -2,7 +2,7 @@ import React, { useEffect, useRef, useState } from 'react';
 import { dbData } from '../assets/data';
 import Defs from './Defs';
 
-const duration = 1000;
+const duration = 2000;
 
 const paths = {
   uf0: 'uf0',
@@ -40,6 +40,21 @@ function getColorByLogData(data) {
       return '#189EFF';
     case 'lc':
       return '#E3CE12';
+    default:
+      return null;
+  }
+}
+
+function getCircleColorByLogData(data) {
+  switch (data) {
+    case 'tx':
+      return '#FF5656';
+    case 'oc':
+      return '#24F6B7';
+    case 'block':
+      return '#189EFF';
+    case 'lc':
+      return null;
     default:
       return null;
   }
@@ -84,40 +99,34 @@ function getFilterByLogData(data) {
   }
 }
 
-function getHighlightColor(currentLog, node) {
-  if (currentLog.from === node || currentLog.to === node) {
-    return getColorByLogData(currentLog.data) || 'transparent';
+function getHighlightColor(log, node) {
+  if (log.from === node || log.to === node) {
+    return getColorByLogData(log.data) || 'transparent';
   }
   return 'transparent';
 }
 
-function getFilterColor(currentLog, node) {
-  if (currentLog.from === node || currentLog.to === node) {
-    console.log(getFilterByLogData(currentLog.data)[node]);
-    return getFilterByLogData(currentLog.data)[node] || 'transparent';
+function getFilterColor(log, node) {
+  if (log.from === node || log.to === node) {
+    console.log(getFilterByLogData(log.data)[node]);
+    return getFilterByLogData(log.data)[node] || 'transparent';
   }
   return 'transparent';
 }
 
-function getPathColor(currentLog, from, to) {
-  if ((currentLog.from === from && currentLog.to === to) || (currentLog.from === to && currentLog.to === from)) {
-    return getColorByLogData(currentLog.data) || '#5C5B5E';
+function getPathColor(log, from, to) {
+  if ((log.from === from && log.to === to) || (log.from === to && log.to === from)) {
+    return getColorByLogData(log.data) || '#5C5B5E';
   }
   return '#5C5B5E';
 }
 
-function getMessage(currentLog, from, to, data) {
-  if (
-    currentLog.data === data &&
-    ((currentLog.from === from && currentLog.to === to) || (currentLog.from === to && currentLog.to === from))
-  )
-    return true;
+function getMessage(log, from, to, data) {
+  if (log.data === data && ((log.from === from && log.to === to) || (log.from === to && log.to === from))) return true;
   return false;
 }
 
 const Test = () => {
-  const [highlight, setHighlight] = useState('#5C5B5E');
-
   const [logs, setLogs] = useState(dbData);
   const [currentIndex, setCurrentIndex] = useState(0);
   //   const [motionPath, setMotionPath] = useState('');
@@ -125,17 +134,11 @@ const Test = () => {
   const [isReversed, setIsReversed] = useState(false);
 
   const handleReversed = (log) => {
-    if (
-      currentLog.to === 'l' &&
-      (currentLog.from === 'f0' || currentLog.from === 'f1' || currentLog.from === 'f2' || currentLog.from === 'f3')
-    ) {
+    if (log.to === 'l' && (log.from === 'f0' || log.from === 'f1' || log.from === 'f2' || log.from === 'f3')) {
       return true;
     }
 
-    if (
-      currentLog.to === 'u' &&
-      (currentLog.from === 'f0' || currentLog.from === 'f1' || currentLog.from === 'f2' || currentLog.from === 'f3')
-    ) {
+    if (log.to === 'u' && (log.from === 'f0' || log.from === 'f1' || log.from === 'f2' || log.from === 'f3')) {
       return true;
     }
     return false;
@@ -193,29 +196,13 @@ const Test = () => {
         stroke={getPathColor(currentLog, 'f3', 'l')}
       />
       {handleReversed(currentLog) ? (
-        <circle
-          r='5'
-          fill={
-            (currentLog.data === 'tx' && '#ff7070') ||
-            (currentLog.data === 'oc' && '#1BC199') ||
-            (currentLog.data === 'block' && '#189EFF') ||
-            (currentLog.data === 'lc' && 'transparent')
-          }
-        >
+        <circle r='5' fill={getCircleColorByLogData(currentLog.data)}>
           <animateMotion dur={`${duration / 1000}s`} repeatCount='indefinite' keyPoints='1;0' keyTimes='0;1'>
             <mpath href={`#${motionPath}`} />
           </animateMotion>
         </circle>
       ) : (
-        <circle
-          r='5'
-          fill={
-            (currentLog.data === 'tx' && '#ff7070') ||
-            (currentLog.data === 'oc' && '#1BC199') ||
-            (currentLog.data === 'block' && '#189EFF') ||
-            (currentLog.data === 'lc' && 'transparent')
-          }
-        >
+        <circle r='5' fill={getCircleColorByLogData(currentLog.data)}>
           <animateMotion dur={`${duration / 1000}s`} repeatCount='indefinite'>
             <mpath href={`#${motionPath}`} />
           </animateMotion>
@@ -230,7 +217,7 @@ const Test = () => {
           height='92'
           rx='12.5'
           stroke={getHighlightColor(currentLog, 'u')}
-          strokeWidth='2'
+          strokeWidth='1'
           shapeRendering='crispEdges'
         />
         <rect x='103' y='162' width='68' height='83' rx='8' fill='#090A0F' />
@@ -282,7 +269,7 @@ const Test = () => {
           height='74'
           rx='12.5'
           stroke={getHighlightColor(currentLog, 'f0')}
-          strokeWidth='2'
+          strokeWidth='1'
           shapeRendering='crispEdges'
         />
         <rect x='370.5' y='27.5' width='85.4344' height='64' rx='7.5' stroke='white' strokeOpacity='0.4' />
@@ -329,7 +316,7 @@ const Test = () => {
           height='74'
           rx='12.5'
           stroke={getHighlightColor(currentLog, 'f1')}
-          strokeWidth='2'
+          strokeWidth='1'
           shapeRendering='crispEdges'
         />
         <rect x='370.5' y='103.5' width='85.4344' height='64' rx='7.5' stroke='white' strokeOpacity='0.4' />
@@ -376,7 +363,7 @@ const Test = () => {
           height='74'
           rx='12.5'
           stroke={getHighlightColor(currentLog, 'f2')}
-          strokeWidth='2'
+          strokeWidth='1'
           shapeRendering='crispEdges'
         />
         <rect x='370.5' y='238.5' width='85.4344' height='64' rx='7.5' stroke='white' strokeOpacity='0.4' />
@@ -423,7 +410,7 @@ const Test = () => {
           height='74'
           rx='12.5'
           stroke={getHighlightColor(currentLog, 'f3')}
-          strokeWidth='2'
+          strokeWidth='1'
           shapeRendering='crispEdges'
         />
         <rect x='370.5' y='314.5' width='85.4344' height='64' rx='7.5' stroke='white' strokeOpacity='0.4' />
@@ -470,7 +457,7 @@ const Test = () => {
           height='92'
           rx='12.5'
           stroke={getHighlightColor(currentLog, 'l')}
-          strokeWidth='2'
+          strokeWidth='1'
           shapeRendering='crispEdges'
         />
         <rect x='645.5' y='162.5' width='85.4344' height='82' rx='7.5' stroke='white' strokeOpacity='0.4' />
@@ -553,7 +540,7 @@ const Test = () => {
           height='67'
           rx='11.5'
           stroke={getHighlightColor(currentLog, 'r0')}
-          strokeWidth='2'
+          strokeWidth='1'
           shapeRendering='crispEdges'
         />
         <rect x='917.5' y='102.5' width='91' height='59' rx='7.5' stroke='white' strokeOpacity='0.4' />
@@ -593,7 +580,7 @@ const Test = () => {
           rx='11.5'
           stroke={getHighlightColor(currentLog, 'r1')}
           shapeRendering='crispEdges'
-          strokeWidth='2'
+          strokeWidth='1'
         />
         <rect x='917.5' y='246.5' width='91' height='59' rx='7.5' stroke='white' strokeOpacity='0.4' />
         <text
