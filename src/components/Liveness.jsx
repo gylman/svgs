@@ -29,6 +29,24 @@ const paths = {
   lr1: 'lr1',
 };
 
+function getColor(currentLog, from, to) {
+  if (
+    currentLog.data === 'tx' &&
+    ((currentLog.from === from && currentLog.to === to) || (currentLog.from === to && currentLog.to === from))
+  ) {
+    return '#FF7070';
+  } else if (
+    currentLog.data === 'oc' &&
+    ((currentLog.from === from && currentLog.to === to) || (currentLog.from === to && currentLog.to === from))
+  ) {
+    return '#1BC199';
+  } else if (currentLog.data === 'block' && currentLog.to === to) {
+    return '#FF7070';
+  } else {
+    return '#E2E2E2';
+  }
+}
+
 const Liveness = () => {
   const [logs, setLogs] = useState(dbData);
   const [currentIndex, setCurrentIndex] = useState(0);
@@ -81,159 +99,64 @@ const Liveness = () => {
         <path
           id='uf0'
           d='M137 170V86C137 72.1929 148.193 61 162 61H378'
-          stroke={
-            (currentLog.data === 'tx' &&
-              ((currentLog.from === 'u' && currentLog.to === 'f0') ||
-                (currentLog.from === 'f0' && currentLog.to === 'u')) &&
-              '#FF7070') ||
-            (currentLog.data === 'oc' &&
-              ((currentLog.from === 'u' && currentLog.to === 'f0') ||
-                (currentLog.from === 'f0' && currentLog.to === 'u')) &&
-              '#1BC199') ||
-            '#E2E2E2'
-          }
+          stroke={getColor(currentLog, 'u', 'f0')}
           strokeWidth='2'
         />
 
         <path
           id='uf1'
           d='M137 170V162C137 148.193 148.193 137 162 137H378'
-          stroke={
-            (currentLog.data === 'tx' &&
-              ((currentLog.from === 'u' && currentLog.to === 'f1') ||
-                (currentLog.from === 'f1' && currentLog.to === 'u')) &&
-              '#FF7070') ||
-            (currentLog.data === 'oc' &&
-              ((currentLog.from === 'u' && currentLog.to === 'f1') ||
-                (currentLog.from === 'f1' && currentLog.to === 'u')) &&
-              '#1BC199') ||
-            '#E2E2E2'
-          }
+          stroke={getColor(currentLog, 'u', 'f1')}
           strokeWidth='2'
         />
-        <path
-          id='ul'
-          d='M176 208L662 208'
-          stroke={
-            (currentLog.data === 'tx' &&
-              ((currentLog.from === 'u' && currentLog.to === 'l') ||
-                (currentLog.from === 'l' && currentLog.to === 'u')) &&
-              '#FF7070') ||
-            (currentLog.data === 'oc' &&
-              ((currentLog.from === 'u' && currentLog.to === 'l') ||
-                (currentLog.from === 'l' && currentLog.to === 'u')) &&
-              '#1BC199') ||
-            '#E2E2E2'
-          }
-          strokeWidth='2'
-        />
+        <path id='ul' d='M176 208L662 208' stroke={getColor(currentLog, 'u', 'l')} strokeWidth='2' />
 
         <path
           id='uf2'
           d='M137 246V254C137 267.807 148.193 279 162 279H378'
-          stroke={
-            (currentLog.data === 'tx' &&
-              ((currentLog.from === 'u' && currentLog.to === 'f2') ||
-                (currentLog.from === 'f2' && currentLog.to === 'u')) &&
-              '#FF7070') ||
-            (currentLog.data === 'oc' &&
-              ((currentLog.from === 'u' && currentLog.to === 'f2') ||
-                (currentLog.from === 'f2' && currentLog.to === 'u')) &&
-              '#1BC199') ||
-            '#E2E2E2'
-          }
+          stroke={getColor(currentLog, 'u', 'f2')}
           strokeWidth='2'
         />
         <path
           id='uf3'
           d='M137 246V330C137 343.807 148.193 355 162 355H378'
-          stroke={
-            (currentLog.data === 'tx' &&
-              ((currentLog.from === 'u' && currentLog.to === 'f3') ||
-                (currentLog.from === 'f3' && currentLog.to === 'u')) &&
-              '#FF7070') ||
-            (currentLog.data === 'oc' &&
-              ((currentLog.from === 'u' && currentLog.to === 'f3') ||
-                (currentLog.from === 'f3' && currentLog.to === 'u')) &&
-              '#1BC199') ||
-            '#E2E2E2'
-          }
+          stroke={getColor(currentLog, 'u', 'f3')}
           strokeWidth='2'
         />
         <path
           id='f0l'
           d='M701 170V86C701 72.1929 689.807 61 676 61H460'
-          stroke={
-            (currentLog.data === 'tx' &&
-              ((currentLog.from === 'f0' && currentLog.to === 'l') ||
-                (currentLog.from === 'l' && currentLog.to === 'f0')) &&
-              '#FF7070') ||
-            (currentLog.data === 'oc' &&
-              ((currentLog.from === 'f0' && currentLog.to === 'l') ||
-                (currentLog.from === 'l' && currentLog.to === 'f0')) &&
-              '#1BC199') ||
-            '#E2E2E2'
-          }
+          stroke={getColor(currentLog, 'f0', 'l')}
           strokeWidth='2'
         />
         <path
           id='f1l'
           d='M701 170V162C701 148.193 689.807 137 676 137H460'
-          stroke={
-            (currentLog.data === 'tx' &&
-              ((currentLog.from === 'f1' && currentLog.to === 'l') ||
-                (currentLog.from === 'l' && currentLog.to === 'f1')) &&
-              '#FF7070') ||
-            (currentLog.data === 'oc' &&
-              ((currentLog.from === 'f1' && currentLog.to === 'l') ||
-                (currentLog.from === 'l' && currentLog.to === 'f1')) &&
-              '#1BC199') ||
-            '#E2E2E2'
-          }
+          stroke={getColor(currentLog, 'f1', 'l')}
           strokeWidth='2'
         />
         <path
           id='f2l'
           d='M701 246V254C701 267.807 689.807 279 676 279H460'
-          stroke={
-            (currentLog.data === 'tx' &&
-              ((currentLog.from === 'f2' && currentLog.to === 'l') ||
-                (currentLog.from === 'l' && currentLog.to === 'f2')) &&
-              '#FF7070') ||
-            (currentLog.data === 'oc' &&
-              ((currentLog.from === 'f2' && currentLog.to === 'l') ||
-                (currentLog.from === 'l' && currentLog.to === 'f2')) &&
-              '#1BC199') ||
-            '#E2E2E2'
-          }
+          stroke={getColor(currentLog, 'f2', 'l')}
           strokeWidth='2'
         />
         <path
           id='f3l'
           d='M701 246V330C701 343.807 689.807 355 676 355H460'
-          stroke={
-            (currentLog.data === 'tx' &&
-              ((currentLog.from === 'f3' && currentLog.to === 'l') ||
-                (currentLog.from === 'l' && currentLog.to === 'f3')) &&
-              '#FF7070') ||
-            (currentLog.data === 'oc' &&
-              ((currentLog.from === 'f3' && currentLog.to === 'l') ||
-                (currentLog.from === 'l' && currentLog.to === 'f3')) &&
-              '#1BC199') ||
-            '#E2E2E2'
-          }
+          stroke={getColor(currentLog, 'f3', 'l')}
           strokeWidth='2'
         />
         <path
           id='lr0'
           d='M738 208H900.5C914.307 208 925.5 196.807 925.5 183V150.5C925.5 142.492 931.992 136 940 136V136'
-          stroke={currentLog.to === 'r0' ? '#FF7070' : '#E2E2E2'}
+          stroke={getColor(currentLog, 'r0')}
           strokeWidth='2'
         />
         <path
           id='lr1'
           d='M738 208H900.5C914.307 208 925.5 219.193 925.5 233V265.5C925.5 273.508 931.992 280 940 280V280'
-          stroke={currentLog.to === 'r1' ? '#FF7070' : '#E2E2E2'}
+          stroke={getColor(currentLog, 'r1')}
           strokeWidth='2'
         />
         <g>

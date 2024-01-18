@@ -51,7 +51,7 @@ function App() {
   //   queryData();
   // }, []);
 
-  return <Anima />;
+  return <Test />;
 }
 
 export default App;
