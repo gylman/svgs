@@ -29,6 +29,14 @@ export const dbData = [
   },
 
   {
+    from: 'u',
+    fid: '0x2',
+    to: 'l',
+    tid: '0xE',
+    data: 'tx',
+  },
+
+  {
     from: 'f0',
     fid: '0xA',
     to: 'l',

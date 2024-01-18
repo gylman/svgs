@@ -29,32 +29,33 @@ const paths = {
   lr1: 'lr1',
 };
 
+function getColorByLogData(logData) {
+  switch (logData) {
+    case 'tx':
+      return '#FF5656';
+    case 'oc':
+      return '#24F6B7';
+    case 'block':
+      return '#189EFF';
+    case 'lc':
+      return '#E3CE12';
+    default:
+      return null;
+  }
+}
+
 function getHighlightColor(currentLog, node) {
   if (currentLog.from === node || currentLog.to === node) {
-    if (currentLog.data === 'tx') return '#FF5656';
-    if (currentLog.data === 'oc') return '#24F6B7';
-    if (currentLog.data === 'block') return '#189EFF';
-    if (currentLog.data === 'lc') return '#E3CE12';
+    return getColorByLogData(currentLog.data) || 'transparent';
   }
   return 'transparent';
 }
 
 function getPathColor(currentLog, from, to) {
-  if (
-    currentLog.data === 'tx' &&
-    ((currentLog.from === from && currentLog.to === to) || (currentLog.from === to && currentLog.to === from))
-  ) {
-    return '#FF5656';
-  } else if (
-    currentLog.data === 'oc' &&
-    ((currentLog.from === from && currentLog.to === to) || (currentLog.from === to && currentLog.to === from))
-  ) {
-    return '#24F6B7';
-  } else if (currentLog.data === 'block' && currentLog.to === to) {
-    return '#189EFF';
-  } else {
-    return '#5C5B5E';
+  if ((currentLog.from === from && currentLog.to === to) || (currentLog.from === to && currentLog.to === from)) {
+    return getColorByLogData(currentLog.data) || '#5C5B5E';
   }
+  return '#5C5B5E';
 }
 
 const Test = () => {
@@ -107,7 +108,7 @@ const Test = () => {
 
   return (
     <svg width='1100' height='406' viewBox='0 0 1100 406' fill='none' xmlns='http://www.w3.org/2000/svg'>
-      <path id='ul' d='M175 204.001L641 204.001' stroke={highlight} />
+      <path id='ul' d='M175 204.001L641 204.001' stroke={getPathColor(currentLog, 'u', 'l')} />
       <path
         id='lr0'
         d='M735 204H876.151C889.958 204 901.151 192.807 901.151 179V144.849C901.151 137.753 906.904 132 914 132V132'
