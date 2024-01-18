@@ -1,9 +1,6 @@
 import React, { useEffect, useState } from 'react';
 // import axios from 'axios';
-import SVG from './components/SVG';
-import Liveness from './components/LIVENESS';
 import Test from './components/Test';
-import { Anima } from './components/Anima';
 
 const token = import.meta.env.VITE_INFLUXDB_TOKEN;
 const url = import.meta.env.VITE_INFLUXDB_URL;
@@ -51,7 +48,11 @@ function App() {
   //   queryData();
   // }, []);
 
-  return <Test />;
+  return (
+    <div style={{ background: 'black' }}>
+      <Test />
+    </div>
+  );
 }
 
 export default App;
