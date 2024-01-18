@@ -93,6 +93,7 @@ function getHighlightColor(currentLog, node) {
 
 function getFilterColor(currentLog, node) {
   if (currentLog.from === node || currentLog.to === node) {
+    console.log(getFilterByLogData(currentLog.data)[node]);
     return getFilterByLogData(currentLog.data)[node] || 'transparent';
   }
   return 'transparent';
@@ -220,7 +221,7 @@ const Test = () => {
           </animateMotion>
         </circle>
       )}
-      <g filter='url(#filter0_d_106_4195)'>
+      <g filter={getFilterColor(currentLog, 'u')}>
         <rect x='99' y='158' width='76' height='91' rx='12' fill='#090A0F' shapeRendering='crispEdges' />
         <rect
           x='98.5'
@@ -272,7 +273,7 @@ const Test = () => {
           </tspan>
         </text>
       </g>
-      <g filter='url(#filter1_d_106_4195)'>
+      <g filter={getFilterColor(currentLog, 'f0')}>
         <rect x='366' y='23' width='94.4344' height='73' rx='12' fill='#090A0F' shapeRendering='crispEdges' />
         <rect
           x='365.5'
@@ -319,7 +320,7 @@ const Test = () => {
           </tspan>
         </text>
       </g>
-      <g filter='url(#filter2_d_106_4195)'>
+      <g filter={getFilterColor(currentLog, 'f1')}>
         <rect x='366' y='99' width='94.4344' height='73' rx='12' fill='#090A0F' shapeRendering='crispEdges' />
         <rect
           x='365.5'
@@ -366,7 +367,7 @@ const Test = () => {
           </tspan>
         </text>
       </g>
-      <g filter='url(#filter3_d_106_4195)'>
+      <g filter={getFilterColor(currentLog, 'f2')}>
         <rect x='366' y='234' width='94.4344' height='73' rx='12' fill='#090A0F' shapeRendering='crispEdges' />
         <rect
           x='365.5'
@@ -413,7 +414,7 @@ const Test = () => {
           </tspan>
         </text>
       </g>
-      <g filter='url(#filter4_d_106_4195)'>
+      <g filter={getFilterColor(currentLog, 'f3')}>
         <rect x='366' y='310' width='94.4344' height='73' rx='12' fill='#090A0F' shapeRendering='crispEdges' />
         <rect
           x='365.5'
@@ -460,7 +461,7 @@ const Test = () => {
           </tspan>
         </text>
       </g>
-      <g filter='url(#filter5_d_106_4195)'>
+      <g filter={getFilterColor(currentLog, 'l')}>
         <rect x='641' y='158' width='94.4344' height='91' rx='12' fill='#090A0F' shapeRendering='crispEdges' />
         <rect
           x='640.5'
@@ -543,80 +544,84 @@ const Test = () => {
           </tspan>
         </text>
       </g>
-      <rect x='913' y='98' width='100' height='68' rx='12' fill='#090A0F' />
-      <rect
-        x='913.5'
-        y='98.5'
-        width='99'
-        height='67'
-        rx='11.5'
-        stroke={getHighlightColor(currentLog, 'r0')}
-        strokeWidth='2'
-        shapeRendering='crispEdges'
-      />
-      <rect x='917.5' y='102.5' width='91' height='59' rx='7.5' stroke='white' strokeOpacity='0.4' />
-      <text
-        fill='white'
-        fillOpacity='0.6'
-        xmlSpace='preserve'
-        style={{ whiteSpace: 'pre' }}
-        fontFamily='area-normal'
-        fontSize='10'
-        letterSpacing='0em'
-      >
-        <tspan x='947' y='124.82'>
-          Rollup
-        </tspan>
-      </text>
-      <text
-        fill='white'
-        xmlSpace='preserve'
-        style={{ whiteSpace: 'pre' }}
-        fontFamily='area-normal'
-        fontSize='14'
-        letterSpacing='0em'
-      >
-        <tspan x='957.5' y='146.548'>
-          A
-        </tspan>
-      </text>
-      <rect x='913' y='242' width='100' height='68' rx='12' fill='#090A0F' />
-      <rect
-        x='913.5'
-        y='242.5'
-        width='99'
-        height='67'
-        rx='11.5'
-        stroke={getHighlightColor(currentLog, 'r1')}
-        shapeRendering='crispEdges'
-        strokeWidth='2'
-      />
-      <rect x='917.5' y='246.5' width='91' height='59' rx='7.5' stroke='white' strokeOpacity='0.4' />
-      <text
-        fill='white'
-        fillOpacity='0.6'
-        xmlSpace='preserve'
-        style={{ whiteSpace: 'pre' }}
-        fontFamily='area-normal'
-        fontSize='10'
-        letterSpacing='0em'
-      >
-        <tspan x='947' y='268.82'>
-          Rollup
-        </tspan>
-      </text>
-      <text
-        fill='white'
-        xmlSpace='preserve'
-        style={{ whiteSpace: 'pre' }}
-        fontFamily='area-normal'
-        fontSize='14'
-        letterSpacing='0em'
-      >
-        <tspan x='958' y='290.548'>
-          B
-        </tspan>
-      </text>
+      <g filter={getFilterColor(currentLog, 'r0')}>
+        <rect x='913' y='98' width='100' height='68' rx='12' fill='#090A0F' />
+        <rect
+          x='913.5'
+          y='98.5'
+          width='99'
+          height='67'
+          rx='11.5'
+          stroke={getHighlightColor(currentLog, 'r0')}
+          strokeWidth='2'
+          shapeRendering='crispEdges'
+        />
+        <rect x='917.5' y='102.5' width='91' height='59' rx='7.5' stroke='white' strokeOpacity='0.4' />
+        <text
+          fill='white'
+          fillOpacity='0.6'
+          xmlSpace='preserve'
+          style={{ whiteSpace: 'pre' }}
+          fontFamily='area-normal'
+          fontSize='10'
+          letterSpacing='0em'
+        >
+          <tspan x='947' y='124.82'>
+            Rollup
+          </tspan>
+        </text>
+        <text
+          fill='white'
+          xmlSpace='preserve'
+          style={{ whiteSpace: 'pre' }}
+          fontFamily='area-normal'
+          fontSize='14'
+          letterSpacing='0em'
+        >
+          <tspan x='957.5' y='146.548'>
+            A
+          </tspan>
+        </text>
+      </g>
+      <g filter={getFilterColor(currentLog, 'r1')}>
+        <rect x='913' y='242' width='100' height='68' rx='12' fill='#090A0F' />
+        <rect
+          x='913.5'
+          y='242.5'
+          width='99'
+          height='67'
+          rx='11.5'
+          stroke={getHighlightColor(currentLog, 'r1')}
+          shapeRendering='crispEdges'
+          strokeWidth='2'
+        />
+        <rect x='917.5' y='246.5' width='91' height='59' rx='7.5' stroke='white' strokeOpacity='0.4' />
+        <text
+          fill='white'
+          fillOpacity='0.6'
+          xmlSpace='preserve'
+          style={{ whiteSpace: 'pre' }}
+          fontFamily='area-normal'
+          fontSize='10'
+          letterSpacing='0em'
+        >
+          <tspan x='947' y='268.82'>
+            Rollup
+          </tspan>
+        </text>
+        <text
+          fill='white'
+          xmlSpace='preserve'
+          style={{ whiteSpace: 'pre' }}
+          fontFamily='area-normal'
+          fontSize='14'
+          letterSpacing='0em'
+        >
+          <tspan x='958' y='290.548'>
+            B
+          </tspan>
+        </text>
+      </g>
       {getMessage(currentLog, 'u', 'f0', 'tx') && (
         <g filter='url(#filter6_d_106_4195)'>
           <rect x='198' y='44' width='118' height='32' rx='4' fill='white' shapeRendering='crispEdges' />
