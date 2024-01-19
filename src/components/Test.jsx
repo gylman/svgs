@@ -7,9 +7,21 @@ import F2 from './F2';
 import F3 from './F3';
 import L from './L';
 import F0 from './F0';
+import F0L from './F0L';
+import F1L from './F1L';
+import F2L from './F2L';
+import F3L from './F3L';
 import R0 from './R0';
 import R1 from './R1';
 import Message from './Message';
+import UF0 from './UF0';
+import UF1 from './UF1';
+import UF2 from './UF2';
+import UF3 from './UF3';
+import UL from './UL';
+import LR0 from './LR0';
+import LR1 from './LR1';
+import Circle from './Circle';
 
 const duration = 2000;
 
@@ -115,50 +127,22 @@ const Test = () => {
 
   return (
     <svg width='1100' height='406' viewBox='0 0 1100 406' fill='none' xmlns='http://www.w3.org/2000/svg'>
-      <path id='ul' d='M175 204.001L641 204.001' stroke={getPathColor(currentLog, 'u', 'l')} />
-      <path
-        id='lr0'
-        d='M735 204H876.151C889.958 204 901.151 192.807 901.151 179V144.849C901.151 137.753 906.904 132 914 132V132'
-        stroke={getPathColor(currentLog, 'l', 'r0')}
-      />
-      <path
-        id='lr1'
-        d='M735 204H876.151C889.958 204 901.151 215.193 901.151 229V263.151C901.151 270.247 906.904 276 914 276V276'
-        stroke={getPathColor(currentLog, 'l', 'r1')}
-      />
-      <path id='uf0' d='M137 158V85C137 71.1929 148.193 60 162 60H366' stroke={getPathColor(currentLog, 'u', 'f0')} />
-      <path id='uf1' d='M137 158V158C137 145.85 146.85 136 159 136H366' stroke={getPathColor(currentLog, 'u', 'f1')} />
-      <path id='uf2' d='M137 249V249C137 261.15 146.85 271 159 271H366' stroke={getPathColor(currentLog, 'u', 'f2')} />
-      <path
-        id='uf3'
-        d='M137 249V322C137 335.807 148.193 347 162 347H366'
-        stroke={getPathColor(currentLog, 'u', 'f3')}
-      />
-      <path id='f0l' d='M689 158V85C689 71.1929 677.807 60 664 60H460' stroke={getPathColor(currentLog, 'f0', 'l')} />
-      <path id='f1l' d='M689 158V158C689 145.85 679.15 136 667 136H460' stroke={getPathColor(currentLog, 'f1', 'l')} />
-      <path id='f2l' d='M689 249V249C689 261.15 679.15 271 667 271H460' stroke={getPathColor(currentLog, 'f2', 'l')} />
-      <path
-        id='f3l'
-        d='M689 249V322C689 335.807 677.807 347 664 347H460'
-        stroke={getPathColor(currentLog, 'f3', 'l')}
-      />
-
-      {isReversed ? (
-        <circle r='5' fill={getColor(currentLog.data)}>
-          <animateMotion dur={`${duration}ms`} repeatCount='indefinite' keyPoints='1;0' keyTimes='0;1'>
-            <mpath href={`#${motionPath}`} />
-          </animateMotion>
-        </circle>
-      ) : (
-        <circle r='5' fill={getColor(currentLog.data)}>
-          <animateMotion dur={`${duration}ms`} repeatCount='indefinite'>
-            <mpath href={`#${motionPath}`} />
-          </animateMotion>
-        </circle>
-      )}
+      {/* The following are the paths from one node to another, i.e. UF0 is the path from 'user' to 'follower 0' */}
+      <UF0 stroke={getPathColor(currentLog, 'u', 'f0')} />
+      <UF1 stroke={getPathColor(currentLog, 'u', 'f1')} />
+      <UF2 stroke={getPathColor(currentLog, 'u', 'f2')} />
+      <UF3 stroke={getPathColor(currentLog, 'u', 'f3')} />
+      <UL stroke={getPathColor(currentLog, 'u', 'l')} />
+      <F0L stroke={getPathColor(currentLog, 'f0', 'l')} />
+      <F1L stroke={getPathColor(currentLog, 'f1', 'l')} />
+      <F2L stroke={getPathColor(currentLog, 'f2', 'l')} />
+      <F3L stroke={getPathColor(currentLog, 'f3', 'l')} />
+      <LR0 stroke={getPathColor(currentLog, 'l', 'r0')} />
+      <LR1 stroke={getPathColor(currentLog, 'l', 'r1')} />
+      {/* Circle is the dot moving along the path */}
+      <Circle color={getColor(currentLog.data)} motionPath={motionPath} duration={duration} isReversed={isReversed} />
+      {/* Entities themselves */}
       <U filterColor={getFilterColor(currentLog, 'u')} highlightColor={getHighlightColor(currentLog, 'u')} />
-      <Message currentLog={currentLog} />
-      <Defs />
       <F0 filterColor={getFilterColor(currentLog, 'f0')} highlightColor={getHighlightColor(currentLog, 'f0')} />
       <F1 filterColor={getFilterColor(currentLog, 'f1')} highlightColor={getHighlightColor(currentLog, 'f1')} />
       <F2 filterColor={getFilterColor(currentLog, 'f2')} highlightColor={getHighlightColor(currentLog, 'f2')} />
@@ -166,6 +150,7 @@ const Test = () => {
       <L filterColor={getFilterColor(currentLog, 'l')} highlightColor={getHighlightColor(currentLog, 'l')} />
       <R0 filterColor={getFilterColor(currentLog, 'r0')} highlightColor={getHighlightColor(currentLog, 'r0')} />
       <R1 filterColor={getFilterColor(currentLog, 'r1')} highlightColor={getHighlightColor(currentLog, 'r1')} />
+      {/* Message is the text box appearing on the path */}
       <Message currentLog={currentLog} />
       <Defs />
     </svg>
