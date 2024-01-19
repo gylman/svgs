@@ -39,14 +39,14 @@ const paths = {
   lr1: 'lr1',
 };
 
-const logDataColors = {
+const colors = {
   tx: '#FF5656',
   oc: '#24F6B7',
   block: '#189EFF',
   lc: '#E3CE12',
 };
 
-const logDataFilters = {
+const filters = {
   tx: {
     u: 'url(#filter0_d_106_4195)',
 
@@ -77,61 +77,39 @@ const logDataFilters = {
   },
 };
 
-function getColorByLogData(data) {
-  return logDataColors[data] || null;
-}
-
-function getFilterByLogData(data) {
-  return logDataFilters[data] || null;
-}
-
-function getHighlightColor(log, node) {
-  if (log.from === node || log.to === node) {
-    return getColorByLogData(log.data) || 'transparent';
-  }
-  return 'transparent';
-}
-
-function getFilterColor(log, node) {
-  if (log.from === node || log.to === node) {
-    const filter = getFilterByLogData(log.data);
-    return filter ? filter[node] || 'transparent' : 'transparent';
-  }
-  return 'transparent';
-}
+const getColor = (data) => colors[data] || '#5C5B5E';
+const getFilter = (data, node) => filters[data]?.[node] || 'none';
 
 function getPathColor(log, from, to) {
   if ((log.from === from && log.to === to) || (log.from === to && log.to === from)) {
-    return getColorByLogData(log.data) || '#5C5B5E';
+    return getColor(log.data);
   }
   return '#5C5B5E';
 }
 
-function getMessage(log, from, to, data) {
-  return log.data === data && ((log.from === from && log.to === to) || (log.from === to && log.to === from));
+function getHighlightColor(log, node) {
+  return log.from === node || log.to === node ? getColor(log.data) : 'transparent';
 }
 
+function getFilterColor(log, node) {
+  return log.from === node || log.to === node ? getFilter(log.data, node) : 'none';
+}
 const Test = () => {
-  const [logs, setLogs] = useState(dbData);
   const [currentIndex, setCurrentIndex] = useState(0);
-  const animateMotionRef = React.useRef(null);
+  const animateMotionRef = useRef(null);
 
   useEffect(() => {
-    const animateMotionElement = animateMotionRef.current;
-    if (animateMotionElement) {
-      animateMotionElement.beginElement();
-    }
+    animateMotionRef.current?.beginElement();
   }, [currentIndex]);
 
   useEffect(() => {
     const interval = setInterval(() => {
-      setCurrentIndex((prevIndex) => (prevIndex + 1) % logs.length);
+      setCurrentIndex((prevIndex) => (prevIndex + 1) % dbData.length);
     }, duration);
-
     return () => clearInterval(interval);
-  }, [logs.length]);
+  }, []);
 
-  const currentLog = logs[currentIndex];
+  const currentLog = dbData[currentIndex];
   const motionPath = paths[currentLog.from + currentLog.to];
   const isReversed = ['l', 'u'].includes(currentLog.to) && ['f0', 'f1', 'f2', 'f3'].includes(currentLog.from);
 
@@ -166,13 +144,13 @@ const Test = () => {
       />
 
       {isReversed ? (
-        <circle r='5' fill={getColorByLogData(currentLog.data)}>
+        <circle r='5' fill={getColor(currentLog.data)}>
           <animateMotion dur={`${duration}ms`} repeatCount='indefinite' keyPoints='1;0' keyTimes='0;1'>
             <mpath href={`#${motionPath}`} />
           </animateMotion>
         </circle>
       ) : (
-        <circle r='5' fill={getColorByLogData(currentLog.data)}>
+        <circle r='5' fill={getColor(currentLog.data)}>
           <animateMotion dur={`${duration}ms`} repeatCount='indefinite'>
             <mpath href={`#${motionPath}`} />
           </animateMotion>
