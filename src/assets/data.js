@@ -115,7 +115,7 @@ export const dbData = [
   },
 ];
 
-export const initialParams = {
+export const paramsV0 = {
   u: {
     id: '0x0',
     x: x,
@@ -174,7 +174,7 @@ export const initialParams = {
   },
 };
 
-const paths = {
+const pathsV0 = {
   uf0: 'M137 170V86C137 72.1929 148.193 61 162 61H378',
   f0u: 'M137 170V86C137 72.1929 148.193 61 162 61H378',
   uf1: 'M137 170V162C137 148.193 148.193 137 162 137H378',
@@ -198,4 +198,95 @@ const paths = {
 
   lr0: 'M738 208H900.5C914.307 208 925.5 196.807 925.5 183V150.5C925.5 142.492 931.992 136 940 136V136',
   lr1: 'M738 208H900.5C914.307 208 925.5 219.193 925.5 233V265.5C925.5 273.508 931.992 280 940 280V280',
+};
+
+export const initialIDs = {
+  u: {
+    id: '0x0',
+  },
+  f0: {
+    id: '0xA',
+  },
+  f1: {
+    id: '0xB',
+  },
+  f2: {
+    id: '0xC',
+  },
+  f3: {
+    id: '0xD',
+  },
+  l: {
+    id: '0xE',
+  },
+  r0: {
+    id: 'A',
+  },
+  r1: {
+    id: 'B',
+  },
+};
+
+export const paths = {
+  uf0: 'uf0',
+  f0u: 'uf0',
+  uf1: 'uf1',
+  f1u: 'uf1',
+  uf2: 'uf2',
+  f2u: 'uf2',
+  uf3: 'uf3',
+  f3u: 'uf3',
+
+  ul: 'ul',
+  lu: 'ul',
+
+  f0l: 'f0l',
+  lf0: 'f0l',
+  f1l: 'f1l',
+  lf1: 'f1l',
+  f2l: 'f2l',
+  lf2: 'f2l',
+  f3l: 'f3l',
+  lf3: 'f3l',
+
+  lr0: 'lr0',
+  lr1: 'lr1',
+};
+
+export const colors = {
+  tx: '#FF5656',
+  oc: '#24F6B7',
+  block: '#189EFF',
+  lc: '#E3CE12',
+};
+
+export const filters = {
+  tx: {
+    u: 'url(#filter0_d_106_4195)',
+
+    f0: 'url(#filter1_d_106_4195)',
+    f1: 'url(#filter2_d_106_4195)',
+    f2: 'url(#filter3_d_106_4195)',
+    f3: 'url(#filter4_d_106_4195)',
+
+    l: 'url(#filter5_d_106_4195)',
+  },
+  oc: {
+    u: 'url(#filter0_d_106_4932)',
+
+    f0: 'url(#filter1_d_106_4932)',
+    f1: 'url(#filter2_d_106_4932)',
+    f2: 'url(#filter3_d_106_4932)',
+    f3: 'url(#filter4_d_106_4932)',
+
+    f4: 'url(#filter5_d_106_4195)',
+  },
+  block: { l: 'url(#filter0_d_138_1546)', r0: 'url(#filter1_d_138_1546)', r1: 'url(#filter2_d_138_1546)' },
+  lc: {
+    f0: 'url(#filter0_d_138_733)',
+    f1: 'url(#filter1_d_138_733)',
+    f2: 'url(#filter2_d_138_733)',
+    f3: 'url(#filter3_d_138_733)',
+    l: 'url(#filter4_d_138_733)',
+  },
 };
