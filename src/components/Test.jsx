@@ -23,8 +23,6 @@ import LR0 from './LR0';
 import LR1 from './LR1';
 import Circle from './Circle';
 
-const duration = 2000;
-
 const paths = {
   uf0: 'uf0',
   f0u: 'uf0',
@@ -108,18 +106,23 @@ function getFilterColor(log, node) {
 }
 const Test = () => {
   const [currentIndex, setCurrentIndex] = useState(0);
+  const [duration] = useState(2000);
+
   const animateMotionRef = useRef(null);
+  const timeoutRef = useRef(null);
 
   useEffect(() => {
     animateMotionRef.current?.beginElement();
   }, [currentIndex]);
 
+  const updateIndex = () => {
+    setCurrentIndex((prevIndex) => (prevIndex + 1) % dbData.length);
+  };
+
   useEffect(() => {
-    const interval = setInterval(() => {
-      setCurrentIndex((prevIndex) => (prevIndex + 1) % dbData.length);
-    }, duration);
-    return () => clearInterval(interval);
-  }, []);
+    timeoutRef.current = setTimeout(updateIndex, duration);
+    return () => clearTimeout(timeoutRef.current);
+  }, [currentIndex]);
 
   const currentLog = dbData[currentIndex];
   const motionPath = paths[currentLog.from + currentLog.to];
