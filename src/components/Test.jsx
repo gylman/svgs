@@ -39,73 +39,50 @@ const paths = {
   lr1: 'lr1',
 };
 
-function getColorByLogData(data) {
-  switch (data) {
-    case 'tx':
-      return '#FF5656';
-    case 'oc':
-      return '#24F6B7';
-    case 'block':
-      return '#189EFF';
-    case 'lc':
-      return '#E3CE12';
-    default:
-      return null;
-  }
-}
+const logDataColors = {
+  tx: '#FF5656',
+  oc: '#24F6B7',
+  block: '#189EFF',
+  lc: '#E3CE12',
+};
 
-function getCircleColorByLogData(data) {
-  switch (data) {
-    case 'tx':
-      return '#FF5656';
-    case 'oc':
-      return '#24F6B7';
-    case 'block':
-      return '#189EFF';
-    case 'lc':
-      return null;
-    default:
-      return null;
-  }
+const logDataFilters = {
+  tx: {
+    u: 'url(#filter0_d_106_4195)',
+
+    f0: 'url(#filter1_d_106_4195)',
+    f1: 'url(#filter2_d_106_4195)',
+    f2: 'url(#filter3_d_106_4195)',
+    f3: 'url(#filter4_d_106_4195)',
+
+    l: 'url(#filter5_d_106_4195)',
+  },
+  oc: {
+    u: 'url(#filter0_d_106_4932)',
+
+    f0: 'url(#filter1_d_106_4932)',
+    f1: 'url(#filter2_d_106_4932)',
+    f2: 'url(#filter3_d_106_4932)',
+    f3: 'url(#filter4_d_106_4932)',
+
+    f4: 'url(#filter5_d_106_4195)',
+  },
+  block: { l: 'url(#filter0_d_138_1546)', r0: 'url(#filter1_d_138_1546)', r1: 'url(#filter2_d_138_1546)' },
+  lc: {
+    f0: 'url(#filter0_d_138_733)',
+    f1: 'url(#filter1_d_138_733)',
+    f2: 'url(#filter2_d_138_733)',
+    f3: 'url(#filter3_d_138_733)',
+    l: 'url(#filter4_d_138_733)',
+  },
+};
+
+function getColorByLogData(data) {
+  return logDataColors[data] || null;
 }
 
 function getFilterByLogData(data) {
-  switch (data) {
-    case 'tx':
-      return {
-        u: 'url(#filter0_d_106_4195)',
-
-        f0: 'url(#filter1_d_106_4195)',
-        f1: 'url(#filter2_d_106_4195)',
-        f2: 'url(#filter3_d_106_4195)',
-        f3: 'url(#filter4_d_106_4195)',
-
-        l: 'url(#filter5_d_106_4195)',
-      };
-    case 'oc':
-      return {
-        u: 'url(#filter0_d_106_4932)',
-
-        f0: 'url(#filter1_d_106_4932)',
-        f1: 'url(#filter2_d_106_4932)',
-        f2: 'url(#filter3_d_106_4932)',
-        f3: 'url(#filter4_d_106_4932)',
-
-        f4: 'url(#filter5_d_106_4195)',
-      };
-    case 'block':
-      return { l: 'url(#filter0_d_138_1546)', r0: 'url(#filter1_d_138_1546)', r1: 'url(#filter2_d_138_1546)' };
-    case 'lc':
-      return {
-        f0: 'url(#filter0_d_138_733)',
-        f1: 'url(#filter1_d_138_733)',
-        f2: 'url(#filter2_d_138_733)',
-        f3: 'url(#filter3_d_138_733)',
-        l: 'url(#filter4_d_138_733)',
-      };
-    default:
-      return null;
-  }
+  return logDataFilters[data] || null;
 }
 
 function getHighlightColor(log, node) {
@@ -117,7 +94,8 @@ function getHighlightColor(log, node) {
 
 function getFilterColor(log, node) {
   if (log.from === node || log.to === node) {
-    return getFilterByLogData(log.data)[node] || 'transparent';
+    const filter = getFilterByLogData(log.data);
+    return filter ? filter[node] || 'transparent' : 'transparent';
   }
   return 'transparent';
 }
@@ -130,29 +108,14 @@ function getPathColor(log, from, to) {
 }
 
 function getMessage(log, from, to, data) {
-  if (log.data === data && ((log.from === from && log.to === to) || (log.from === to && log.to === from))) return true;
-  return false;
+  return log.data === data && ((log.from === from && log.to === to) || (log.from === to && log.to === from));
 }
 
 const Test = () => {
   const [logs, setLogs] = useState(dbData);
   const [currentIndex, setCurrentIndex] = useState(0);
-  //   const [motionPath, setMotionPath] = useState('');
-  const animateMotionRef = useRef(null);
-  const [isReversed, setIsReversed] = useState(false);
+  const animateMotionRef = React.useRef(null);
 
-  const handleReversed = (log) => {
-    if (log.to === 'l' && (log.from === 'f0' || log.from === 'f1' || log.from === 'f2' || log.from === 'f3')) {
-      return true;
-    }
-
-    if (log.to === 'u' && (log.from === 'f0' || log.from === 'f1' || log.from === 'f2' || log.from === 'f3')) {
-      return true;
-    }
-    return false;
-  };
-
-  // Restart the animation on every log
   useEffect(() => {
     const animateMotionElement = animateMotionRef.current;
     if (animateMotionElement) {
@@ -160,19 +123,17 @@ const Test = () => {
     }
   }, [currentIndex]);
 
-  // Iterate through the logs
   useEffect(() => {
     const interval = setInterval(() => {
       setCurrentIndex((prevIndex) => (prevIndex + 1) % logs.length);
     }, duration);
 
     return () => clearInterval(interval);
-  }, []);
+  }, [logs.length]);
 
   const currentLog = logs[currentIndex];
-
   const motionPath = paths[currentLog.from + currentLog.to];
-  // console.log(currentLog);
+  const isReversed = ['l', 'u'].includes(currentLog.to) && ['f0', 'f1', 'f2', 'f3'].includes(currentLog.from);
 
   return (
     <svg width='1100' height='406' viewBox='0 0 1100 406' fill='none' xmlns='http://www.w3.org/2000/svg'>
@@ -203,20 +164,23 @@ const Test = () => {
         d='M689 249V322C689 335.807 677.807 347 664 347H460'
         stroke={getPathColor(currentLog, 'f3', 'l')}
       />
-      {handleReversed(currentLog) ? (
-        <circle r='5' fill={getCircleColorByLogData(currentLog.data)}>
+
+      {isReversed ? (
+        <circle r='5' fill={getColorByLogData(currentLog.data)}>
           <animateMotion dur={`${duration}ms`} repeatCount='indefinite' keyPoints='1;0' keyTimes='0;1'>
             <mpath href={`#${motionPath}`} />
           </animateMotion>
         </circle>
       ) : (
-        <circle r='5' fill={getCircleColorByLogData(currentLog.data)}>
+        <circle r='5' fill={getColorByLogData(currentLog.data)}>
           <animateMotion dur={`${duration}ms`} repeatCount='indefinite'>
             <mpath href={`#${motionPath}`} />
           </animateMotion>
         </circle>
       )}
       <U filterColor={getFilterColor(currentLog, 'u')} highlightColor={getHighlightColor(currentLog, 'u')} />
+      <Message currentLog={currentLog} />
+      <Defs />
       <F0 filterColor={getFilterColor(currentLog, 'f0')} highlightColor={getHighlightColor(currentLog, 'f0')} />
       <F1 filterColor={getFilterColor(currentLog, 'f1')} highlightColor={getHighlightColor(currentLog, 'f1')} />
       <F2 filterColor={getFilterColor(currentLog, 'f2')} highlightColor={getHighlightColor(currentLog, 'f2')} />
