@@ -44,7 +44,6 @@ const Test = () => {
   const [IDs, setIDs] = useState(initialIDs);
   const [currentIndex, setCurrentIndex] = useState(0);
   const [duration] = useState(2000);
-
   const animateMotionRef = useRef(null);
   const timeoutRef = useRef(null);
 
