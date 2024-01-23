@@ -47,15 +47,12 @@ const Test = () => {
   const animateMotionRef = useRef(null);
   const timeoutRef = useRef(null);
 
-  useEffect(() => {
-    animateMotionRef.current?.beginElement();
-  }, [currentIndex]);
-
   const updateIndex = () => {
     setCurrentIndex((prevIndex) => (prevIndex + 1) % dbData.length);
   };
 
   useEffect(() => {
+    animateMotionRef.current?.beginElement();
     timeoutRef.current = setTimeout(updateIndex, duration);
     return () => clearTimeout(timeoutRef.current);
   }, [currentIndex]);
