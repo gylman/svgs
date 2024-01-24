@@ -91,34 +91,6 @@ const Test = () => {
   const motionPath = paths[currentLog.from + currentLog.to];
   const isReversed = ['l', 'u'].includes(currentLog.to) && ['f0', 'f1', 'f2', 'f3'].includes(currentLog.from);
 
-  const animateMotionRef = useRef(null);
-
-  useEffect(() => {
-    const animateMotionElement = animateMotionRef.current;
-
-    // Function to restart the animation
-    const restartAnimation = () => {
-      if (animateMotionElement) {
-        animateMotionElement.beginElement();
-      }
-    };
-
-    // Add event listener
-    if (animateMotionElement) {
-      animateMotionElement.addEventListener('endEvent', handleIsFinished);
-      restartAnimation();
-    }
-
-    // Cleanup
-    return () => {
-      if (animateMotionElement) {
-        animateMotionElement.removeEventListener('endEvent', handleIsFinished);
-      }
-    };
-  }, [motionPath, isReversed, handleIsFinished, isFinished]);
-
-  console.log(isFinished, motionPath);
-
   return (
     <svg width='1100' height='406' viewBox='0 0 1100 406' fill='none' xmlns='http://www.w3.org/2000/svg'>
       {/* The following are the paths from one node to another, i.e. UF0 is the path from 'user' to 'follower 0' */}
@@ -135,18 +107,14 @@ const Test = () => {
       <LR1 stroke={getPathColor(currentLog, 'l', 'r1')} />
       {/* Circle is the dot moving along the path */}
       {!isFinished && (
-        <circle r='5' fill={getColor(currentLog.data)}>
-          <animateMotion
-            key={`${currentIndex}-${motionPath}`}
-            ref={animateMotionRef}
-            dur={`${duration}ms`}
-            keyPoints={isReversed ? '1;0' : '0;1'}
-            keyTimes='0;1'
-            repeatCount='1'
-          >
-            <mpath key={cuid()} href={`#${motionPath}`} />
-          </animateMotion>
-        </circle>
+        <Circle
+          color={getColor(currentLog.data)}
+          isFinished={isFinished}
+          motionPath={motionPath}
+          duration={duration}
+          isReversed={isReversed}
+          handleIsFinished={handleIsFinished}
+        />
       )}
       {/* Entities themselves */}
       <U

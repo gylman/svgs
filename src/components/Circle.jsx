@@ -1,8 +1,7 @@
 import React, { useEffect, useState, useRef } from 'react';
 import cuid from 'cuid';
 
-const Circle = ({ color, motionPath, duration, isReversed, handleIsFinished, restart }) => {
-  console.log(motionPath);
+const Circle = ({ color, motionPath, duration, isReversed, handleIsFinished }) => {
   const animateMotionRef = useRef(null);
 
   useEffect(() => {
@@ -30,19 +29,11 @@ const Circle = ({ color, motionPath, duration, isReversed, handleIsFinished, res
   }, [motionPath, isReversed, handleIsFinished]);
 
   return (
-    restart && (
-      <circle r='5' fill={color}>
-        <animateMotion
-          key={cuid()}
-          ref={animateMotionRef}
-          dur={`${duration}ms`}
-          keyPoints={isReversed ? '1;0' : '0;1'}
-          keyTimes='0;1'
-        >
-          <mpath key={cuid()} href={`#${motionPath}`} />
-        </animateMotion>
-      </circle>
-    )
+    <circle r='5' fill={color}>
+      <animateMotion ref={animateMotionRef} dur={`${duration}ms`} keyPoints={isReversed ? '1;0' : '0;1'} keyTimes='0;1'>
+        <mpath key={cuid()} href={`#${motionPath}`} />
+      </animateMotion>
+    </circle>
   );
 };
 
