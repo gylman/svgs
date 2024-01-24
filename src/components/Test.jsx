@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { dbData, initialIDs, colors, filters, paths } from '../assets/data';
 import Defs from './Defs';
 import U from './U';
@@ -22,6 +22,7 @@ import UL from './UL';
 import LR0 from './LR0';
 import LR1 from './LR1';
 import Circle from './Circle';
+import cuid from 'cuid';
 
 const getColor = (data) => colors[data] || '#5C5B5E';
 const getFilter = (data, node) => filters[data]?.[node] || 'none';
@@ -44,18 +45,21 @@ const Test = () => {
   const [IDs, setIDs] = useState(initialIDs);
   const [currentIndex, setCurrentIndex] = useState(0);
   const [duration] = useState(2000);
-  const animateMotionRef = useRef(null);
-  const timeoutRef = useRef(null);
+  const [isFinished, setIsFinished] = useState(false);
+  const handleIsFinished = useCallback(() => {
+    setIsFinished(true);
+  }, []);
 
   const updateIndex = () => {
     setCurrentIndex((prevIndex) => (prevIndex + 1) % dbData.length);
   };
 
   useEffect(() => {
-    animateMotionRef.current?.beginElement();
-    timeoutRef.current = setTimeout(updateIndex, duration);
-    return () => clearTimeout(timeoutRef.current);
-  }, [currentIndex]);
+    if (isFinished) {
+      updateIndex();
+      setIsFinished(false);
+    }
+  }, [currentIndex, isFinished]);
 
   const currentLog = dbData[currentIndex];
 
@@ -102,7 +106,16 @@ const Test = () => {
       <LR0 stroke={getPathColor(currentLog, 'l', 'r0')} />
       <LR1 stroke={getPathColor(currentLog, 'l', 'r1')} />
       {/* Circle is the dot moving along the path */}
-      <Circle color={getColor(currentLog.data)} motionPath={motionPath} duration={duration} isReversed={isReversed} />
+      {!isFinished && (
+        <Circle
+          color={getColor(currentLog.data)}
+          isFinished={isFinished}
+          motionPath={motionPath}
+          duration={duration}
+          isReversed={isReversed}
+          handleIsFinished={handleIsFinished}
+        />
+      )}
       {/* Entities themselves */}
       <U
         id={IDs.u.id}
